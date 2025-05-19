@@ -165,7 +165,7 @@ const Hero = () => {
               </h2>
               <button
                 onClick={handleSaveCode}
-                className="bg-indigo-700 hover:bg-indigo-600 text-white px-4 py-1.5 rounded-md flex items-center gap-2 transition-colors duration-200"
+                className="bg-zinc-700 hover:bg-zinc-600 text-white px-4 py-1.5 rounded-md flex items-center gap-2 transition-colors duration-200"
               >
                 <Save size={16} />
                 Save Code
@@ -176,7 +176,7 @@ const Hero = () => {
             <div className="flex-1 overflow-hidden rounded-lg border border-zinc-700 shadow-xl">
               {loading ? (
                 <div className="flex items-center justify-center h-full">
-                  <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-500"></div>
+                  <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-zinc-500"></div>
                 </div>
               ) : (
                 <Editor
@@ -219,7 +219,7 @@ const Hero = () => {
               </div>
               <button
                 onClick={handleSendPrompt}
-                className="bg-indigo-700 hover:bg-indigo-600 text-white px-4 py-3 rounded-lg flex items-center gap-2 transition-colors duration-200"
+                className="bg-zinc-700 hover:bg-zinc-600 text-white px-4 py-3 rounded-lg flex items-center gap-2 transition-colors duration-200"
               >
                 <Send size={18} />
                 SEND
