@@ -1,7 +1,13 @@
-import "./App.css";
+import Hero from "./components/Hero";
 
 function App() {
-  return <div className="text-red-400">Imran Shah</div>;
+  return (
+    <main>
+      <section>
+        <Hero />
+      </section>
+    </main>
+  );
 }
 
 export default App;
