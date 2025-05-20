@@ -129,9 +129,9 @@ const VideoEditor = ({ projectVideos = [] }: VideoEditorProps) => {
   return (
     <div className={`flex flex-col h-full`}>
       {/* Timeline Section */}
-      <div className="p-2  border-t border-gray-700">
-        <div className="flex justify-between mb-1"></div>
-        <div className="flex-1 flex justify-center items-center p-2 bg-black">
+      <div className="p-2  border-t border-zinc-950">
+        <div className="flex justify-between mb-1 "></div>
+        <div className="flex-1 flex justify-center  items-center p-2 bg-black">
           {selectedVideo ? (
             <video
               ref={videoRef}
@@ -154,7 +154,7 @@ const VideoEditor = ({ projectVideos = [] }: VideoEditorProps) => {
       {/* Video Player Section */}
       <div className="flex-1 flex flex-col">
         {/* Controls */}
-        <div className="p-2 bg-zinc-800 flex items-center gap-2 mx-2">
+        <div className="p-2 bg-zinc-950  flex items-center gap-2 mx-2">
           <div className="flex gap-1">
             <button
               onClick={togglePlay}
