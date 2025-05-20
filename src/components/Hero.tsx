@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+// /* eslint-disable @typescript-eslint/no-unused-vars */
 // /* eslint-disable @typescript-eslint/no-explicit-any */
 // // /* eslint-disable @typescript-eslint/no-explicit-any */
-// // /* eslint-disable @typescript-eslint/no-unused-expressions */
-// // /* eslint-disable @typescript-eslint/no-unused-vars */
+// // // /* eslint-disable @typescript-eslint/no-explicit-any */
+// // // /* eslint-disable @typescript-eslint/no-unused-expressions */
+// // // /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
@@ -11,6 +13,7 @@ import ProjectSidebar from "./ProjectSidebar";
 import { processVideosFromApi } from "../utils/VideoHelpers";
 import { Editor } from "@monaco-editor/react";
 import { Send, Play } from "lucide-react";
+import MarkdownExplanation from "../utils/MarkDown";
 
 type Video = {
   id: string;
@@ -28,11 +31,12 @@ type Project = {
   prompt: string;
   createdAt: string;
   updatedAt: string;
+  explanation?: string;
 };
 
 const Hero = () => {
   const [project, setProject] = useState<Project | null>(null);
-  const [, setJobId] = useState<string>("");
+  const [jobId, setJobId] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [generatingCode, setGeneratingCode] = useState<boolean>(false);
   const [runningCode, setRunningCode] = useState<boolean>(false);
@@ -114,7 +118,6 @@ const Hero = () => {
       setResponseLog("Starting code execution...\n");
 
       // Save the code - backend will automatically rerun it
-      // Properly format the data as expected by the API
       const response = await axios.put(
         `http://localhost:3000/api/manim/update/project/${project.id}`,
         { code: project.code },
@@ -248,33 +251,35 @@ const Hero = () => {
   };
 
   return (
-    <div className="h-screen flex bg-zinc-950 text-gray-200 overflow-hidden">
+    <div className="h-screen flex flex-col md:flex-row bg-zinc-950 text-gray-200 overflow-hidden">
       {/* Sidebar */}
-      <ProjectSidebar
-        onSelectProject={handleSelectProject}
-        currentProjectId={project?.id || null}
-      />
+      <div className="w-full md:w-auto">
+        <ProjectSidebar
+          onSelectProject={handleSelectProject}
+          currentProjectId={project?.id || null}
+        />
+      </div>
 
       {/* Status message */}
       {saveStatus && (
-        <div className="absolute top-4 right-4 bg-zinc-800 text-zinc-400 px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in-out">
+        <div className="fixed top-4 right-4 bg-zinc-800 text-zinc-400 px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in-out">
           {saveStatus}
         </div>
       )}
 
-      <div className="flex flex-1">
+      <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
         {/* Code Editor Section */}
-        <div className="w-1/2 border-r border-zinc-700 flex flex-col">
-          <div className="h-[85%] p-4 pb-2 flex flex-col">
+        <div className="w-full md:w-1/2 border-r border-zinc-700 flex flex-col">
+          <div className="h-[60vh] md:h-[85%] p-2 md:p-4 md:pb-2 flex flex-col">
             {/* Editor Header */}
             <div className="flex justify-between items-center mb-2">
-              <h2 className="text-lg font-semibold text-gray-200">
+              <h2 className="text-base md:text-lg font-semibold text-gray-200 truncate">
                 Dream Frames {project && `- ${project.prompt}`}
               </h2>
               <button
                 onClick={handleSaveCode}
                 disabled={!project || generatingCode || runningCode}
-                className={`bg-zinc-900 hover:bg-zinc-800 text-zinc-400 text-sm px-4 py-1.5 rounded-md flex items-center gap-2 transition-colors duration-200 ${
+                className={`bg-zinc-900 hover:bg-zinc-800 text-zinc-400 text-xs md:text-sm px-2 md:px-4 py-1 md:py-1.5 rounded-md flex items-center gap-1 md:gap-2 transition-colors duration-200 ${
                   !project || generatingCode || runningCode
                     ? "opacity-50 cursor-not-allowed"
                     : ""
@@ -282,20 +287,23 @@ const Hero = () => {
               >
                 {runningCode ? (
                   <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white"></div>
-                    Running...
+                    <div className="animate-spin rounded-full h-3 w-3 md:h-4 md:w-4 border-t-2 border-b-2 border-white"></div>
+                    <span className="hidden md:inline">Running...</span>
+                    <span className="inline md:hidden">Run...</span>
                   </>
                 ) : (
                   <>
-                    <Play size={16} />
-                    Save & Run
+                    <Play size={16} className="hidden md:inline" />
+                    <Play size={14} className="inline md:hidden" />
+                    <span className="hidden md:inline">Save & Run</span>
+                    <span className="inline md:hidden">Run</span>
                   </>
                 )}
               </button>
             </div>
 
             {/* Monaco Editor or Response Log */}
-            <div className="flex-1 overflow-hidden rounded-lg border border-zinc-900 shadow-2xl">
+            <div className="flex-1 overflow-hidden rounded-lg border border-zinc-900 shadow-xl">
               {loading ? (
                 <div className="flex items-center justify-center h-full">
                   <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-zinc-500"></div>
@@ -303,7 +311,7 @@ const Hero = () => {
               ) : generatingCode || runningCode ? (
                 <div
                   ref={logContainerRef}
-                  className="h-full bg-zinc-950 text-zinc-400 font-mono text-sm p-4 overflow-auto whitespace-pre-wrap"
+                  className="h-full bg-zinc-950 text-zinc-400 font-mono text-xs md:text-sm p-2 md:p-4 overflow-auto whitespace-pre-wrap"
                 >
                   {responseLog || "Waiting for response..."}
                 </div>
@@ -316,7 +324,7 @@ const Hero = () => {
                   onMount={handleEditorDidMount}
                   theme="hc-black"
                   options={{
-                    minimap: { enabled: true },
+                    minimap: { enabled: false, maxColumn: 80 },
                     scrollBeyondLastLine: false,
                     fontSize: 14,
                     fontFamily: "JetBrains Mono, monospace",
@@ -336,8 +344,8 @@ const Hero = () => {
           </div>
 
           {/* Input area for prompt */}
-          <div className="p-4 pt-2">
-            <div className="flex items-center ">
+          <div className="p-2 md:p-4 md:pt-2">
+            <div className="flex items-center">
               <div className="relative flex-1">
                 <input
                   value={prompt}
@@ -349,7 +357,7 @@ const Hero = () => {
                     handleSendPrompt()
                   }
                   disabled={generatingCode || runningCode}
-                  className={`w-full bg-zinc-900 border border-zinc-800  rounded-l-3xl px-4 py-1 text-gray-200 placeholder:text-gray-400 focus:outline-none text-md  ${
+                  className={`w-full bg-zinc-900 border border-zinc-800 rounded-l-3xl px-3 md:px-4 py-1 text-gray-200 placeholder:text-gray-400 focus:outline-none text-sm md:text-md ${
                     generatingCode || runningCode
                       ? "opacity-50 cursor-not-allowed"
                       : ""
@@ -360,7 +368,7 @@ const Hero = () => {
               <button
                 onClick={handleSendPrompt}
                 disabled={generatingCode || runningCode}
-                className={`bg-zinc-800 hover:bg-zinc-900 cursor-pointer text-white px-4  py-[10px] rounded-r-3xl flex items-center  gap-2 transition-colors duration-200 ${
+                className={`bg-zinc-800 hover:bg-zinc-900 cursor-pointer text-white px-3 md:px-4 py-[8px] md:py-[10px] rounded-r-3xl flex items-center justify-center transition-colors duration-200 ${
                   generatingCode || runningCode
                     ? "opacity-50 cursor-not-allowed"
                     : ""
@@ -369,7 +377,7 @@ const Hero = () => {
                 {generatingCode ? (
                   <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white"></div>
                 ) : (
-                  <Send className="mr-2" size={14} />
+                  <Send size={14} />
                 )}
               </button>
             </div>
@@ -377,25 +385,30 @@ const Hero = () => {
         </div>
 
         {/* Video Editor Section */}
-        <div className="w-1/2 flex flex-col ">
-          <div className="p-4 h-full mt-2 ">
-            <h2 className="text-lg font-semibold text-gray-200 mb-2 ">
+        <div className="w-full md:w-1/2 flex flex-col overflow-hidden">
+          <div className="p-2 md:p-4 h-full">
+            <h2 className="text-base md:text-lg font-semibold text-gray-200 mb-2">
               Video Preview
             </h2>
-            <div className="border border-red-400 h-screen overflow-y-scroll">
-              <div className="b-2 bg-zinc-900/50 rounded-lg border border-zinc-400 pb-3">
+            <div className="h-screen overflow-y-scroll no-scrollbar">
+              {/* Video editor container */}
+              <div className="bg-zinc-900/50 rounded-lg border border-zinc-700 mb-2 md:mb-3 flex-shrink-0 overflow-hidden">
                 {loading ? (
                   <div className="flex items-center justify-center h-full">
                     <div className="flex flex-col items-center">
-                      <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-500 mb-4"></div>
-                      <p className="text-gray-400">Loading video editor...</p>
+                      <div className="animate-spin rounded-full h-6 w-6 md:h-8 md:w-8 border-t-2 border-b-2 border-indigo-500 mb-2 md:mb-4"></div>
+                      <p className="text-gray-400 text-sm">
+                        Loading video editor...
+                      </p>
                     </div>
                   </div>
                 ) : error ? (
                   <div className="flex items-center justify-center h-full">
                     <div className="text-red-400 flex flex-col items-center">
-                      <span className="text-red-500 text-5xl mb-4">!</span>
-                      <p>{error}</p>
+                      <span className="text-red-500 text-3xl md:text-5xl mb-2 md:mb-4">
+                        !
+                      </span>
+                      <p className="text-sm text-center px-4">{error}</p>
                     </div>
                   </div>
                 ) : project?.videos && project.videos.length > 0 ? (
@@ -404,10 +417,12 @@ const Hero = () => {
                     onSave={handleSaveVideos}
                   />
                 ) : (
-                  <div className="flex flex-col  items-center justify-center h-[75vh]">
-                    <div className="border-2 border-dashed border-zinc-600 rounded-lg p-12 text-center max-w-md">
-                      <p className="text-zinc-400 mb-3">No videos available</p>
-                      <p className="text-sm text-zinc-500">
+                  <div className="flex flex-col items-center justify-center h-full ">
+                    <div className="border-2 border-dashed border-zinc-600 rounded-lg p-4 md:p-12 text-center max-w-md">
+                      <p className="text-zinc-400 mb-2 md:mb-3 text-sm">
+                        No videos available
+                      </p>
+                      <p className="text-xs md:text-sm text-zinc-500">
                         {generatingCode || runningCode
                           ? "Generating video, please wait..."
                           : "Enter a prompt to generate a Manim animation"}
@@ -416,41 +431,12 @@ const Hero = () => {
                   </div>
                 )}
               </div>
-              <div className="border mt-2 rounded-lg">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Dignissimos non, excepturi praesentium explicabo veniam dolore
-                  ipsa magni sunt sed similique, ab soluta, nam sapiente fugit
-                  error tempore maxime sit quibusdam fuga omnis ullam recusandae
-                  quia voluptates doloribus? Labore nihil error tenetur cum!
-                  Autem quis, earum quaerat reiciendis enim deserunt modi!
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Debitis nihil fugit ex laborum accusantium minima expedita sit
-                  animi nisi hic sed id reiciendis nostrum quibusdam illo nobis
-                  aut amet soluta a voluptas, dolores inventore. Dolorum eveniet
-                  sunt nostrum ut laudantium velit. Nisi id nulla, ut esse vel
-                  fugiat voluptates velit cum, illo a deserunt sed, sunt ipsam
-                  voluptate rerum? Temporibus? Lorem ipsum dolor sit amet
-                  consectetur adipisicing elit. Distinctio voluptatum sed
-                  voluptatem corrupti architecto. Quae nihil deleniti odit vel
-                  praesentium natus deserunt. Eius, qui provident? Corporis
-                  suscipit similique dolorum libero, nemo quo iste ab mollitia!
-                  Totam consequatur amet, dolore voluptatem alias ex commodi
-                  impedit minima perspiciatis aliquam dolorum provident facilis
-                  recusandae modi id laborum soluta enim nostrum! Non ut eaque,
-                  dolore reprehenderit distinctio soluta aliquid natus repellat
-                  similique impedit repellendus molestiae, blanditiis
-                  perferendis fugiat, quis recusandae harum! Itaque, quo iusto?
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Illum ullam in qui odit necessitatibus ipsam minima deleniti
-                  velit, distinctio commodi aut unde quis suscipit perspiciatis
-                  laborum aspernatur sequi nostrum. Quaerat totam earum possimus
-                  molestias dolorem, omnis praesentium est ipsam quidem magni
-                  doloribus aut minima repellendus itaque iste placeat at
-                  tempore deserunt. Iure fugit, maiores obcaecati omnis
-                  praesentium nulla dolorum incidunt quae. Voluptate praesentium
-                  magni corporis similique dignissimos, nisi recusandae et.
-                </p>
+
+              {/* Explanation section */}
+              <div className="flex-grow overflow-hidden rounded-lg border border-zinc-700">
+                <div className="h-full overflow-y-auto">
+                  <MarkdownExplanation explanation={project?.explanation} />
+                </div>
               </div>
             </div>
           </div>
