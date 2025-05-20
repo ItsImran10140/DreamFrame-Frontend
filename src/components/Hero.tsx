@@ -257,7 +257,7 @@ const Hero = () => {
 
       {/* Status message */}
       {saveStatus && (
-        <div className="absolute top-4 right-4 bg-zinc-800 text-green-400 px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in-out">
+        <div className="absolute top-4 right-4 bg-zinc-800 text-zinc-400 px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in-out">
           {saveStatus}
         </div>
       )}
@@ -303,7 +303,7 @@ const Hero = () => {
               ) : generatingCode || runningCode ? (
                 <div
                   ref={logContainerRef}
-                  className="h-full bg-zinc-950 text-green-400 font-mono text-sm p-4 overflow-auto whitespace-pre-wrap"
+                  className="h-full bg-zinc-950 text-zinc-400 font-mono text-sm p-4 overflow-auto whitespace-pre-wrap"
                 >
                   {responseLog || "Waiting for response..."}
                 </div>
@@ -321,6 +321,7 @@ const Hero = () => {
                     fontSize: 14,
                     fontFamily: "JetBrains Mono, monospace",
                     automaticLayout: true,
+                    renderLineHighlight: "none",
                     wordWrap: "on",
                     padding: { top: 12 },
                     lineNumbers: "on",
@@ -359,7 +360,7 @@ const Hero = () => {
               <button
                 onClick={handleSendPrompt}
                 disabled={generatingCode || runningCode}
-                className={`bg-zinc-800 hover:bg-zinc-900 text-white px-4  py-[8px] rounded-r-3xl flex items-center  gap-2 transition-colors duration-200 ${
+                className={`bg-zinc-800 hover:bg-zinc-900 cursor-pointer text-white px-4  py-[10px] rounded-r-3xl flex items-center  gap-2 transition-colors duration-200 ${
                   generatingCode || runningCode
                     ? "opacity-50 cursor-not-allowed"
                     : ""
@@ -368,7 +369,7 @@ const Hero = () => {
                 {generatingCode ? (
                   <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white"></div>
                 ) : (
-                  <Send className="mr-2" size={18} />
+                  <Send className="mr-2" size={14} />
                 )}
               </button>
             </div>
@@ -376,43 +377,81 @@ const Hero = () => {
         </div>
 
         {/* Video Editor Section */}
-        <div className="w-1/2 flex flex-col">
-          <div className="p-4 h-full mt-2">
-            <h2 className="text-lg font-semibold text-gray-200 mb-2">
+        <div className="w-1/2 flex flex-col ">
+          <div className="p-4 h-full mt-2 ">
+            <h2 className="text-lg font-semibold text-gray-200 mb-2 ">
               Video Preview
             </h2>
-            <div className="b-2 bg-zinc-900/50 rounded-lg border border-zinc-950">
-              {loading ? (
-                <div className="flex items-center justify-center h-full">
-                  <div className="flex flex-col items-center">
-                    <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-500 mb-4"></div>
-                    <p className="text-gray-400">Loading video editor...</p>
+            <div className="border border-red-400 h-screen overflow-y-scroll">
+              <div className="b-2 bg-zinc-900/50 rounded-lg border border-zinc-400 pb-3">
+                {loading ? (
+                  <div className="flex items-center justify-center h-full">
+                    <div className="flex flex-col items-center">
+                      <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-500 mb-4"></div>
+                      <p className="text-gray-400">Loading video editor...</p>
+                    </div>
                   </div>
-                </div>
-              ) : error ? (
-                <div className="flex items-center justify-center h-full">
-                  <div className="text-red-400 flex flex-col items-center">
-                    <span className="text-red-500 text-5xl mb-4">!</span>
-                    <p>{error}</p>
+                ) : error ? (
+                  <div className="flex items-center justify-center h-full">
+                    <div className="text-red-400 flex flex-col items-center">
+                      <span className="text-red-500 text-5xl mb-4">!</span>
+                      <p>{error}</p>
+                    </div>
                   </div>
-                </div>
-              ) : project?.videos && project.videos.length > 0 ? (
-                <VideoEditor
-                  projectVideos={project.videos}
-                  onSave={handleSaveVideos}
-                />
-              ) : (
-                <div className="flex flex-col items-center justify-center h-full">
-                  <div className="border-2 border-dashed border-zinc-600 rounded-lg p-12 text-center max-w-md">
-                    <p className="text-zinc-400 mb-3">No videos available</p>
-                    <p className="text-sm text-zinc-500">
-                      {generatingCode || runningCode
-                        ? "Generating video, please wait..."
-                        : "Enter a prompt to generate a Manim animation"}
-                    </p>
+                ) : project?.videos && project.videos.length > 0 ? (
+                  <VideoEditor
+                    projectVideos={project.videos}
+                    onSave={handleSaveVideos}
+                  />
+                ) : (
+                  <div className="flex flex-col  items-center justify-center h-[75vh]">
+                    <div className="border-2 border-dashed border-zinc-600 rounded-lg p-12 text-center max-w-md">
+                      <p className="text-zinc-400 mb-3">No videos available</p>
+                      <p className="text-sm text-zinc-500">
+                        {generatingCode || runningCode
+                          ? "Generating video, please wait..."
+                          : "Enter a prompt to generate a Manim animation"}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
+              <div className="border mt-2 rounded-lg">
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Dignissimos non, excepturi praesentium explicabo veniam dolore
+                  ipsa magni sunt sed similique, ab soluta, nam sapiente fugit
+                  error tempore maxime sit quibusdam fuga omnis ullam recusandae
+                  quia voluptates doloribus? Labore nihil error tenetur cum!
+                  Autem quis, earum quaerat reiciendis enim deserunt modi!
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                  Debitis nihil fugit ex laborum accusantium minima expedita sit
+                  animi nisi hic sed id reiciendis nostrum quibusdam illo nobis
+                  aut amet soluta a voluptas, dolores inventore. Dolorum eveniet
+                  sunt nostrum ut laudantium velit. Nisi id nulla, ut esse vel
+                  fugiat voluptates velit cum, illo a deserunt sed, sunt ipsam
+                  voluptate rerum? Temporibus? Lorem ipsum dolor sit amet
+                  consectetur adipisicing elit. Distinctio voluptatum sed
+                  voluptatem corrupti architecto. Quae nihil deleniti odit vel
+                  praesentium natus deserunt. Eius, qui provident? Corporis
+                  suscipit similique dolorum libero, nemo quo iste ab mollitia!
+                  Totam consequatur amet, dolore voluptatem alias ex commodi
+                  impedit minima perspiciatis aliquam dolorum provident facilis
+                  recusandae modi id laborum soluta enim nostrum! Non ut eaque,
+                  dolore reprehenderit distinctio soluta aliquid natus repellat
+                  similique impedit repellendus molestiae, blanditiis
+                  perferendis fugiat, quis recusandae harum! Itaque, quo iusto?
+                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                  Illum ullam in qui odit necessitatibus ipsam minima deleniti
+                  velit, distinctio commodi aut unde quis suscipit perspiciatis
+                  laborum aspernatur sequi nostrum. Quaerat totam earum possimus
+                  molestias dolorem, omnis praesentium est ipsam quidem magni
+                  doloribus aut minima repellendus itaque iste placeat at
+                  tempore deserunt. Iure fugit, maiores obcaecati omnis
+                  praesentium nulla dolorum incidunt quae. Voluptate praesentium
+                  magni corporis similique dignissimos, nisi recusandae et.
+                </p>
+              </div>
             </div>
           </div>
         </div>

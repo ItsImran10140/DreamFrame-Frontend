@@ -105,7 +105,7 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
   return (
     <div
       className={`relative h-full transition-all duration-300 ease-in-out ${
-        isOpen ? "w-80" : "w-12"
+        isOpen ? "w-60" : "w-4"
       }`}
     >
       {/* Toggle button */}
@@ -122,7 +122,7 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
 
       {/* Sidebar content */}
       <div
-        className={`h-full bg-zinc-900 border-r border-zinc-800 flex flex-col ${
+        className={`h-full bg-zinc-950 border-r border-zinc-800 flex flex-col ${
           isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         } transition-opacity duration-300`}
       >
@@ -150,13 +150,13 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
                 <div
                   key={project.id}
                   onClick={() => onSelectProject(project.id)}
-                  className={`px-4 py-3 cursor-pointer transition-colors duration-200 hover:bg-zinc-800 border-l-2 ${
+                  className={`px-4 py-1 cursor-pointer transition-colors duration-200 hover:bg-zinc-800 border-l-2 ${
                     project.id === currentProjectId
-                      ? "border-indigo-500 bg-zinc-800/60"
+                      ? "border-zinc-400 bg-zinc-800/60"
                       : "border-transparent"
                   }`}
                 >
-                  <div className="text-zinc-200 font-medium truncate mb-1">
+                  <div className="text-zinc-200 font-semibold text-sm truncate mb-1">
                     {project.prompt}
                   </div>
                   <div className="flex items-center text-xs text-zinc-500">
