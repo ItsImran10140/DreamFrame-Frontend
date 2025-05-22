@@ -1,10 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// /* eslint-disable @typescript-eslint/no-unused-vars */
-// /* eslint-disable @typescript-eslint/no-explicit-any */
-// // /* eslint-disable @typescript-eslint/no-explicit-any */
-// // // /* eslint-disable @typescript-eslint/no-explicit-any */
-// // // /* eslint-disable @typescript-eslint/no-unused-expressions */
-// // // /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
@@ -270,16 +265,18 @@ const Hero = () => {
       <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
         {/* Code Editor Section */}
         <div className="w-full md:w-1/2 border-r border-zinc-700 flex flex-col">
-          <div className="h-[60vh] md:h-[85%] p-2 md:p-4 md:pb-2 flex flex-col">
+          <div className="h-[70vh] md:h-[95%] p-2 md:p-4 md:pb-2 flex flex-col">
             {/* Editor Header */}
             <div className="flex justify-between items-center mb-2">
-              <h2 className="text-base md:text-lg font-semibold text-gray-200 truncate">
-                Dream Frames {project && `- ${project.prompt}`}
-              </h2>
+              <div className="truncate w-[400px]">
+                <h2 className="text-base md:text-lg font-semibold text-zinc-400 truncate">
+                  Dynamo {project && `- ${project.prompt}`}
+                </h2>
+              </div>
               <button
                 onClick={handleSaveCode}
                 disabled={!project || generatingCode || runningCode}
-                className={`bg-zinc-900 hover:bg-zinc-800 text-zinc-400 text-xs md:text-sm px-2 md:px-4 py-1 md:py-1.5 rounded-md flex items-center gap-1 md:gap-2 transition-colors duration-200 ${
+                className={`bg-zinc-900 hover:bg-zinc-800 text-zinc-400 text-xs md:text-sm px-2 md:px-4 py-1 md:py-1.5 rounded-md flex items-center gap-1 md:gap-2 transition-colors duration-200${
                   !project || generatingCode || runningCode
                     ? "opacity-50 cursor-not-allowed"
                     : ""
@@ -295,7 +292,7 @@ const Hero = () => {
                   <>
                     <Play size={16} className="hidden md:inline" />
                     <Play size={14} className="inline md:hidden" />
-                    <span className="hidden md:inline">Save & Run</span>
+                    <span className="hidden md:inline ">Save & Run</span>
                     <span className="inline md:hidden">Run</span>
                   </>
                 )}
@@ -303,7 +300,7 @@ const Hero = () => {
             </div>
 
             {/* Monaco Editor or Response Log */}
-            <div className="flex-1 overflow-hidden rounded-lg border border-zinc-900 shadow-xl">
+            <div className="flex-1 overflow-hidden rounded-lg border border-zinc-800  ">
               {loading ? (
                 <div className="flex items-center justify-center h-full">
                   <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-zinc-500"></div>
@@ -357,7 +354,7 @@ const Hero = () => {
                     handleSendPrompt()
                   }
                   disabled={generatingCode || runningCode}
-                  className={`w-full bg-zinc-900 border border-zinc-800 rounded-l-3xl px-3 md:px-4 py-1 text-gray-200 placeholder:text-gray-400 focus:outline-none text-sm md:text-md ${
+                  className={`w-full bg-zinc-900 border border-zinc-800 rounded-l-3xl px-3 md:px-4 py-1.5 text-gray-200 placeholder:text-gray-400 focus:outline-none text-sm md:text-md ${
                     generatingCode || runningCode
                       ? "opacity-50 cursor-not-allowed"
                       : ""
@@ -387,12 +384,12 @@ const Hero = () => {
         {/* Video Editor Section */}
         <div className="w-full md:w-1/2 flex flex-col overflow-hidden">
           <div className="p-2 md:p-4 h-full">
-            <h2 className="text-base md:text-lg font-semibold text-gray-200 mb-2">
+            <h2 className="text-base md:text-lg font-semibold text-gray-400 mb-2">
               Video Preview
             </h2>
             <div className="h-screen overflow-y-scroll no-scrollbar">
               {/* Video editor container */}
-              <div className="bg-zinc-900/50 rounded-lg border border-zinc-700 mb-2 md:mb-3 flex-shrink-0 overflow-hidden">
+              <div className="bg-zinc-900/50 rounded-lg border-[0.75px] border-zinc-800 mb-2 pb-2 md:mb-3 flex-shrink-0 overflow-hidden mt-2">
                 {loading ? (
                   <div className="flex items-center justify-center h-full">
                     <div className="flex flex-col items-center">
@@ -417,7 +414,7 @@ const Hero = () => {
                     onSave={handleSaveVideos}
                   />
                 ) : (
-                  <div className="flex flex-col items-center justify-center h-full ">
+                  <div className="flex flex-col items-center justify-center h-[50vh]">
                     <div className="border-2 border-dashed border-zinc-600 rounded-lg p-4 md:p-12 text-center max-w-md">
                       <p className="text-zinc-400 mb-2 md:mb-3 text-sm">
                         No videos available
@@ -433,7 +430,7 @@ const Hero = () => {
               </div>
 
               {/* Explanation section */}
-              <div className="flex-grow overflow-hidden rounded-lg border border-zinc-700">
+              <div className="flex-grow overflow-hidden rounded-lg border border-zinc-700 ">
                 <div className="h-full overflow-y-auto">
                   <MarkdownExplanation explanation={project?.explanation} />
                 </div>
