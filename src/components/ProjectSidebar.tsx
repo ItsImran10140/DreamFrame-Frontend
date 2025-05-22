@@ -102,6 +102,10 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
     setIsOpen(!isOpen);
   };
 
+  const refesh = () => {
+    window.location.href = "http://localhost:5173";
+  };
+
   return (
     <div
       className={`relative h-full transition-all duration-300 ease-in-out ${
@@ -129,7 +133,10 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
         {/* Header */}
         <div className="p-4 border-b border-zinc-800 flex justify-between items-center">
           <h2 className="text-lg font-medium text-zinc-200">Projects</h2>
-          <button className="p-1 bg-zinc-800 rounded-md hover:bg-zinc-700 transition-colors">
+          <button
+            onClick={refesh}
+            className="p-1 bg-zinc-800 rounded-md hover:bg-zinc-700 transition-colors"
+          >
             <Plus size={18} className="text-zinc-300" />
           </button>
         </div>
@@ -141,7 +148,7 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
               <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-zinc-500"></div>
             </div>
           ) : error ? (
-            <div className="p-4 text-red-400 text-sm">{error}</div>
+            <div className="p-4 text-zinc-400 text-sm">{error}</div>
           ) : projects.length === 0 ? (
             <div className="p-4 text-zinc-500 text-sm">No projects found</div>
           ) : (
