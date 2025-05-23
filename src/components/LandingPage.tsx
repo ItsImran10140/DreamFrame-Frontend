@@ -43,7 +43,7 @@ const LandingPage = () => {
             directly into Python Manim code and renders professional
             mathematical animations automatically.
           </p>
-          <Link to="/hero">
+          <Link to="/signup">
             <button className="bg-zinc-200 hover:bg-zinc-400  text-zinc-800 font-semibold py-2 px-6 rounded-full transition-colors">
               Get Started
             </button>
