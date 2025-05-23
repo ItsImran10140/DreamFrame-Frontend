@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { ChevronLeft, ChevronRight, Clock, Plus } from "lucide-react";
 import { format } from "date-fns";
+import { UserAuth } from "./AuthContext";
+import { useNavigate } from "react-router-dom";
 
 type Video = {
   id: string;
@@ -50,6 +53,19 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [pagination, setPagination] = useState<PaginationData | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const { session, signOut } = UserAuth();
+  const navigate = useNavigate();
+
+  const handleSignOut = async (e: any) => {
+    e.preventDefault();
+    try {
+      await signOut();
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // Fetch projects from API
   const fetchProjects = async (page = 1) => {
@@ -138,6 +154,12 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
             className="p-1 bg-zinc-800 rounded-md hover:bg-zinc-700 transition-colors"
           >
             <Plus size={18} className="text-zinc-300" />
+          </button>
+          <button
+            onClick={handleSignOut}
+            className="p-1 bg-zinc-800 rounded-md hover:bg-zinc-700 transition-colors"
+          >
+            <Plus size={18} className="text-red-500" />
           </button>
         </div>
 
