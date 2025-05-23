@@ -2,8 +2,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import StarBorder from "../UI/border";
 import SpotlightCard from "../UI/Card";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { UserAuth } from "./AuthContext";
+import { supabase } from "./superbaseClient";
 
 const LogIn = () => {
   const [email, setEmail] = useState("");
@@ -12,6 +13,26 @@ const LogIn = () => {
   const { session, signInUser }: any = UserAuth();
   console.log(session);
   const navigate = useNavigate();
+
+  // Navigate to /hero if user is already authenticated
+  useEffect(() => {
+    if (session) {
+      navigate("/hero");
+    }
+  }, [session, navigate]);
+
+  // Listen for auth state changes (for OAuth callbacks)
+  useEffect(() => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === "SIGNED_IN" && session) {
+        navigate("/hero");
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [navigate]);
 
   console.log(email, password);
 
@@ -25,6 +46,23 @@ const LogIn = () => {
       }
     } catch (err) {
       console.error("Error signing in: ", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const signInWithGoogle = async () => {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+      });
+
+      if (error) {
+        console.error("Error signing in with Google:", error);
+      }
+    } catch (err) {
+      console.error("Error with Google signin:", err);
     } finally {
       setLoading(false);
     }
@@ -90,9 +128,10 @@ const LogIn = () => {
                 <div>
                   <button
                     type="submit"
-                    className="border-[0.75px] border-neutral-700 w-full h-10 rounded-xl mt-2 text-neutral-300 hover:text-neutral-400 hover:bg-neutral-300/20"
+                    disabled={loading}
+                    className="border-[0.75px] border-neutral-700 w-full h-10 rounded-xl mt-2 text-neutral-300 hover:text-neutral-400 hover:bg-neutral-300/20 disabled:opacity-50"
                   >
-                    LogIn
+                    {loading ? "Logging in..." : "LogIn"}
                   </button>
                 </div>
                 <div className="flex w-full justify-center items-center my-2">
@@ -101,7 +140,12 @@ const LogIn = () => {
                   <div className="h-[0.75px] bg-zinc-400/10 w-[95%]"></div>
                 </div>
                 <div>
-                  <button className="border w-full h-10 rounded-xl mt-8 flex justify-center items-center bg-neutral-100">
+                  <button
+                    type="button"
+                    onClick={signInWithGoogle}
+                    disabled={loading}
+                    className="border w-full h-10 rounded-xl mt-8 flex justify-center items-center bg-neutral-100 disabled:opacity-50"
+                  >
                     <div className="flex">
                       <div className="w-5 mr-3">
                         <img
@@ -111,7 +155,7 @@ const LogIn = () => {
                         />
                       </div>
                       <div className="text-zinc-800 font-semibold">
-                        LogIn with Google
+                        {loading ? "Logging in..." : "LogIn with Google"}
                       </div>
                     </div>
                   </button>
