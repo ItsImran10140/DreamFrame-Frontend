@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import StarBorder from "../UI/border";
 import SpotlightCard from "../UI/Card";
 
-const SignUp = () => {
+const LogIn = () => {
   return (
     <div className="relative min-h-screen overflow-hidden">
       {/* Video Background */}
@@ -25,21 +25,9 @@ const SignUp = () => {
         >
           <div className="">
             <div className=" flex justify-center mb-10 ">
-              <h1 className="text-3xl">Sign Up</h1>
+              <h1 className="text-3xl">LogIn</h1>
             </div>
             <div>
-              <StarBorder
-                as="button"
-                className=" w-full mb-2"
-                color="white"
-                speed="5s"
-              >
-                <input
-                  type="text"
-                  placeholder="Name"
-                  className="w-full h-10 rounded-xl bg-transparent  px-3 outline-none"
-                />
-              </StarBorder>
               <StarBorder
                 as="button"
                 className=" w-full mb-2"
@@ -69,7 +57,7 @@ const SignUp = () => {
               <div className="h-[0.75px] my-3 bg-zinc-400/10"></div>
               <div>
                 <button className="border-[0.75px] border-neutral-700 w-full h-10 rounded-xl mt-2 text-neutral-300 hover:text-neutral-400 hover:bg-neutral-300/20">
-                  Sign Up
+                  LogIn
                 </button>
               </div>
               <div className="flex w-full justify-center items-center my-2">
@@ -88,7 +76,7 @@ const SignUp = () => {
                       />
                     </div>
                     <div className="text-zinc-800 font-semibold">
-                      Signup with Google
+                      LogIn with Google
                     </div>
                   </div>
                 </button>
@@ -97,10 +85,10 @@ const SignUp = () => {
             <div className="w-full flex justify-center items-center my-4">
               <div className="flex">
                 <p className="text-neutral-500 mr-2">
-                  Already have a account :{" "}
+                  Don't have a Account ? :{" "}
                 </p>
-                <Link to="/login">
-                  <button className="text-neutral-300">Login</button>
+                <Link to="/signup">
+                  <button className="text-neutral-300">Sign Up</button>
                 </Link>
               </div>
             </div>
@@ -111,4 +99,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default LogIn;
