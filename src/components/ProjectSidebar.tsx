@@ -54,7 +54,7 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
   const [pagination, setPagination] = useState<PaginationData | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { session, signOut } = UserAuth();
+  const { signOut }: any = UserAuth();
   const navigate = useNavigate();
 
   const handleSignOut = async (e: any) => {

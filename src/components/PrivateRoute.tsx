@@ -7,7 +7,8 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute = ({ children }: PrivateRouteProps) => {
-  const { session } = UserAuth();
+  const auth = UserAuth();
+  const session = auth?.session;
   return <>{session ? <>{children}</> : <Navigate to="/signup" />} </>;
 };
 

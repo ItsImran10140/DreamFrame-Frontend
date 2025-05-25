@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import LandingPage from "../components/LandingPage";
 import SignUp from "../components/SignUp";
-import LogIn from "../components/Login";
+import LogIn from "../components/LogIn";
 import Hero from "../components/Hero";
 import PrivateRoute from "../components/PrivateRoute";
 

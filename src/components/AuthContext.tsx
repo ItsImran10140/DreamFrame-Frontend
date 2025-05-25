@@ -10,7 +10,6 @@ import { supabase } from "./superbaseClient";
 
 interface AuthContextType {
   signUpNewUser: (
-    username: string,
     email: string,
     password: string
   ) => Promise<{ success: boolean; data?: any; error?: any }>;
@@ -30,13 +29,8 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   >(null);
 
   // Sign up
-  const signUpNewUser = async (
-    username: string,
-    email: string,
-    password: string
-  ) => {
+  const signUpNewUser = async (email: string, password: string) => {
     const { data, error } = await supabase.auth.signUp({
-      username: username,
       email: email.toLowerCase(),
       password: password,
     });

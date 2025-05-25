@@ -224,6 +224,7 @@ const Hero = () => {
       if (extractedJobId) {
         setSaveStatus("Generation complete! Loading project...");
         await fetchProject(extractedJobId);
+        console.log(jobId);
         setSaveStatus("Project loaded successfully!");
       } else {
         setSaveStatus("Generation complete, but could not extract project ID");
