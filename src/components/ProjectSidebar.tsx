@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { ChevronLeft, ChevronRight, Clock, Plus } from "lucide-react";
+import { ChevronLeft, ChevronRight, Clock, LogOut, Plus } from "lucide-react";
 import { format } from "date-fns";
 import { UserAuth } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -53,6 +53,7 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [pagination, setPagination] = useState<PaginationData | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [toggleOpen, setToggleOpen] = useState(false);
 
   const { signOut }: any = UserAuth();
   const navigate = useNavigate();
@@ -119,7 +120,7 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
   };
 
   const refesh = () => {
-    window.location.href = "http://localhost:5173";
+    window.location.href = "http://localhost:5173/hero";
   };
 
   return (
@@ -154,12 +155,6 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
             className="p-1 bg-zinc-800 rounded-md hover:bg-zinc-700 transition-colors"
           >
             <Plus size={18} className="text-zinc-300" />
-          </button>
-          <button
-            onClick={handleSignOut}
-            className="p-1 bg-zinc-800 rounded-md hover:bg-zinc-700 transition-colors"
-          >
-            <Plus size={18} className="text-red-500" />
           </button>
         </div>
 
@@ -228,6 +223,64 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
             </button>
           </div>
         )}
+
+        {toggleOpen ? (
+          <div
+            className={`border-t border-r border-l p-2 bg-zinc-800/20  rounded-t-lg border-zinc-700 transition-all duration-300 ease-in-out ${
+              toggleOpen
+                ? "translate-y-0 opacity-100"
+                : "translate-y-full opacity-0"
+            }`}
+          >
+            <div>
+              <p className="text-[12px] text-zinc-400 p-1">
+                imranshah10140@gmail.com
+              </p>
+              <div className="flex items-center py-1">
+                <div>
+                  {/* <img src="" alt="" /> */}
+                  <div className="rounded-full h-6 w-6 bg-neutral-500 flex justify-center items-center mx-2">
+                    I
+                  </div>
+                </div>
+                <div>
+                  <p className="text-sm">Imran Shah</p>
+                  <p className="text-[11px]">Free Plan</p>
+                </div>
+              </div>
+              <div className="h-[0.75px] bg-neutral-600/40"></div>
+              <div className="my-3 text-sm text-zinc-300 rounded-md pl-2 py-1 cursor-pointer hover:bg-zinc-500/40">
+                Settings
+              </div>
+              <div>
+                <div className="flex justify-between my-1">
+                  <p className="text-sm text-zinc-300">Log Out</p>
+                  <button
+                    onClick={handleSignOut}
+                    className="p-1 bg-zinc-800 rounded-md hover:bg-zinc-700 transition-colors"
+                  >
+                    {/* <Plus size={18} className="text-red-500" /> */}
+                    <LogOut size={18} className="p-[2px] text-zinc-300" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
+
+        <div
+          onClick={() => setToggleOpen(!toggleOpen)}
+          className="p-4 border-t border-zinc-700 flex justify-between items-center"
+        >
+          <div className="flex items-center border w-full p-2 border-zinc-500/30 rounded-lg cursor-pointer hover:bg-neutral-800/20">
+            <div className="bg-zinc-500 h-6 w-6 rounded-full flex justify-center items-center mr-2">
+              I
+            </div>
+            <div>Imran Shah</div>
+          </div>
+        </div>
       </div>
     </div>
   );
