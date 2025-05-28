@@ -9,6 +9,7 @@ import { processVideosFromApi } from "../utils/VideoHelpers";
 import { Editor } from "@monaco-editor/react";
 import { Send, Play } from "lucide-react";
 import MarkdownExplanation from "../utils/MarkDown";
+import FloatingBlobBackground from "../UI/backgroundGradient";
 
 type Video = {
   id: string;
@@ -87,7 +88,7 @@ const Hero = () => {
   }, [responseLog]);
 
   // Handle editor mounting
-  function handleEditorDidMount(editor: any) {
+  function handleEditorDidMount(editor: any, monaco: any) {
     editorRef.current = editor;
 
     // Focus the editor when mounted
@@ -247,8 +248,9 @@ const Hero = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col md:flex-row bg-zinc-950 text-gray-200 overflow-hidden relative">
-      <div className="flex h-screen flex-col md:flex-row bg-zinc-200/60 text-gray-200 overflow-hidden border w-full absolute z-10">
+    <FloatingBlobBackground className="">
+      <div className="h-screen flex flex-col  md:flex-row bg-zinc-950/40 text-gray-200 overflow-hidden ">
+        {/* <div className="flex h-screen flex-col md:flex-row bg-zinc-200/60 text-gray-200 overflow-hidden border w-full absolute z-10"> */}
         {/* Sidebar */}
         <div className="w-full md:w-auto">
           <ProjectSidebar
@@ -256,7 +258,6 @@ const Hero = () => {
             currentProjectId={project?.id || null}
           />
         </div>
-
         {/* Status message */}
         {saveStatus && (
           <div className="fixed top-4 right-4 bg-zinc-800 text-zinc-400 px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in-out">
@@ -310,20 +311,21 @@ const Hero = () => {
                 ) : generatingCode || runningCode ? (
                   <div
                     ref={logContainerRef}
-                    className="h-full bg-zinc-950 text-zinc-400 font-mono text-xs md:text-sm p-2 md:p-4 overflow-auto whitespace-pre-wrap"
+                    className="h-full bg-zinc-950 text-zinc-400 font-mono text-xs md:text-sm p-2 md:p-4 overflow-auto whitespace-pre-wrap "
                   >
                     {responseLog || "Waiting for response..."}
                   </div>
                 ) : (
                   <Editor
                     height="100%"
+                    width={"101%"}
                     defaultLanguage="python"
                     value={project?.code || ""}
                     onChange={handleCodeChange}
                     onMount={handleEditorDidMount}
                     theme="hc-black"
                     options={{
-                      minimap: { enabled: false, maxColumn: 80 },
+                      minimap: { enabled: false },
                       scrollBeyondLastLine: false,
                       fontSize: 14,
                       fontFamily: "JetBrains Mono, monospace",
@@ -356,7 +358,7 @@ const Hero = () => {
                       handleSendPrompt()
                     }
                     disabled={generatingCode || runningCode}
-                    className={`w-full bg-zinc-900 border border-zinc-800 rounded-l-3xl px-3 md:px-4 py-1.5 text-gray-200 placeholder:text-gray-400 focus:outline-none text-sm md:text-md ${
+                    className={`w-full bg-zinc-900/20 border border-zinc-800 rounded-l-3xl px-3 md:px-4 py-1.5 text-gray-200 placeholder:text-gray-400 focus:outline-none text-sm md:text-md ${
                       generatingCode || runningCode
                         ? "opacity-50 cursor-not-allowed"
                         : ""
@@ -367,7 +369,7 @@ const Hero = () => {
                 <button
                   onClick={handleSendPrompt}
                   disabled={generatingCode || runningCode}
-                  className={`bg-zinc-800 hover:bg-zinc-900 cursor-pointer text-white px-3 md:px-4 py-[8px] md:py-[10px] rounded-r-3xl flex items-center justify-center transition-colors duration-200 ${
+                  className={`bg-zinc-800/40 hover:bg-zinc-800 cursor-pointer text-white px-3 md:px-4 py-[8px] md:py-[9px] rounded-r-3xl flex border-[0.75px] border-zinc-600 items-center justify-center transition-colors duration-200 ${
                     generatingCode || runningCode
                       ? "opacity-50 cursor-not-allowed"
                       : ""
@@ -442,7 +444,7 @@ const Hero = () => {
           </div>
         </div>
       </div>
-    </div>
+    </FloatingBlobBackground>
   );
 };
 

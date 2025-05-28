@@ -14,14 +14,14 @@ export default function MarkdownExplanation({
   // If there's no explanation, show a placeholder
   if (!explanation) {
     return (
-      <div className="flex items-center justify-center h-full p-6 text-zinc-500 text-sm">
+      <div className="flex items-center justify-center h-[35vh] p-6  text-zinc-500 text-sm">
         No explanation available for this animation.
       </div>
     );
   }
 
   return (
-    <div className="p-4 overflow-y-auto bg-zinc-900 rounded-lg text-gray-200">
+    <div className="p-4 overflow-y-auto bg-zinc-900/10 rounded-lg text-gray-200">
       <h3 className="font-semibold text-lg mb-2 text-gray-100">
         Animation Explanation
       </h3>

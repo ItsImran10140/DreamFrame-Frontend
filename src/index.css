@@ -30,3 +30,13 @@
         /* Firefox */
     }
 }
+
+.monaco-editor .current-line {
+    background: transparent !important;
+    border: none !important;
+}
+
+.monaco-editor .margin-view-overlays .current-line {
+    background: transparent !important;
+    border: none !important;
+}

@@ -142,12 +142,12 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
 
       {/* Sidebar content */}
       <div
-        className={`h-full bg-zinc-950 border-r border-zinc-800 flex flex-col ${
+        className={`h-full bg-zinc-950/10 border-r border-zinc-700 flex flex-col ${
           isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         } transition-opacity duration-300`}
       >
         {/* Header */}
-        <div className="p-4 border-b border-zinc-800 flex justify-between items-center">
+        <div className="p-4 border-b border-zinc-700 flex justify-between items-center">
           <h2 className="text-lg font-medium text-zinc-200">Projects</h2>
           <button
             onClick={refesh}
@@ -179,9 +179,9 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
                 <div
                   key={project.id}
                   onClick={() => onSelectProject(project.id)}
-                  className={`px-4 py-1 cursor-pointer transition-colors duration-200 hover:bg-zinc-800 border-l-2 ${
+                  className={`px-4 py-1 cursor-pointer transition-colors duration-200 hover:bg-zinc-600/20 border-l-2 ${
                     project.id === currentProjectId
-                      ? "border-zinc-400 bg-zinc-800/60"
+                      ? "border-zinc-400 bg-zinc-700/20"
                       : "border-transparent"
                   }`}
                 >
