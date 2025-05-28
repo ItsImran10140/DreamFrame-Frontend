@@ -4,7 +4,7 @@ import axios from "axios";
 import { ChevronLeft, ChevronRight, Clock, LogOut, Plus } from "lucide-react";
 import { format } from "date-fns";
 import { UserAuth } from "./AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 type Video = {
   id: string;
@@ -249,9 +249,11 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
                 </div>
               </div>
               <div className="h-[0.75px] bg-neutral-600/40"></div>
-              <div className="my-3 text-sm text-zinc-300 rounded-md pl-2 py-1 cursor-pointer hover:bg-zinc-500/40">
-                Settings
-              </div>
+              <Link to={"/settings"}>
+                <div className="my-3 text-sm text-zinc-300 rounded-md pl-2 py-1 cursor-pointer hover:bg-zinc-500/40">
+                  <p>Settings</p>
+                </div>
+              </Link>
               <div>
                 <div className="flex justify-between my-1">
                   <p className="text-sm text-zinc-300">Log Out</p>
