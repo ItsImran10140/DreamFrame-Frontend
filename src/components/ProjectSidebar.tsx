@@ -54,6 +54,8 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
   const [pagination, setPagination] = useState<PaginationData | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [toggleOpen, setToggleOpen] = useState(false);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
 
   const { signOut }: any = UserAuth();
   const navigate = useNavigate();
@@ -90,6 +92,30 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
   // Load projects on initial render
   useEffect(() => {
     fetchProjects();
+  }, []);
+
+  const handleUserDetails = async () => {
+    try {
+      const token = localStorage.getItem("accessToken");
+      const response = await axios.get(
+        "http://localhost:3000/api/manim/profile",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log(response.data.user);
+      setUsername(response.data.user.username);
+      setEmail(response.data.user.email);
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    handleUserDetails();
   }, []);
 
   // Format date for display
@@ -233,9 +259,7 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
             }`}
           >
             <div>
-              <p className="text-[12px] text-zinc-400 p-1">
-                imranshah10140@gmail.com
-              </p>
+              <p className="text-[12px] text-zinc-400 p-1">{email}</p>
               <div className="flex items-center py-1">
                 <div>
                   {/* <img src="" alt="" /> */}
@@ -244,7 +268,7 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
                   </div>
                 </div>
                 <div>
-                  <p className="text-sm">Imran Shah</p>
+                  <p className="text-sm">{username}</p>
                   <p className="text-[11px]">Free Plan</p>
                 </div>
               </div>
@@ -280,7 +304,7 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
             <div className="bg-zinc-500 h-6 w-6 rounded-full flex justify-center items-center mr-2">
               I
             </div>
-            <div>Imran Shah</div>
+            <div>{username}</div>
           </div>
         </div>
       </div>
