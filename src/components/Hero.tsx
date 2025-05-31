@@ -48,7 +48,13 @@ const Hero = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:3000/api/manim/project/${projectId}`
+        `http://localhost:3000/api/manim/project/${projectId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
       );
 
       if (response.data?.videos) {
@@ -120,6 +126,7 @@ const Hero = () => {
         {
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
         }
       );
@@ -169,7 +176,12 @@ const Hero = () => {
 
       await axios.put(
         `http://localhost:3000/api/manim/project/${project.id}`,
-        updatedProject
+        updatedProject,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
       );
 
       setProject(updatedProject);
@@ -190,11 +202,18 @@ const Hero = () => {
       setResponseLog("");
       setSaveStatus("Processing prompt...");
 
+      const token = localStorage.getItem("accessToken");
+      if (!token) {
+        setSaveStatus("You must be logged in to generate code.");
+        return;
+      }
+
       // Make a request to generate Manim code with streaming response
       const response = await fetch("http://localhost:3000/api/manim/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ prompt: prompt }),
       });

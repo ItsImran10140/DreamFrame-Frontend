@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-// /* eslint-disable react-hooks/exhaustive-deps */
-// /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { useState, useRef, useEffect } from "react";
 import { Play, Pause } from "lucide-react";
@@ -40,6 +40,9 @@ const VideoEditor = ({ projectVideos = [] }: VideoEditorProps) => {
     }));
 
     setVideos(processedVideos);
+    console.log("====================================================");
+    console.log("Processed Videos:", processedVideos);
+    console.log("====================================================");
     if (processedVideos.length > 0) {
       setSelectedVideo(processedVideos[0].id);
     }

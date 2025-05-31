@@ -75,7 +75,12 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
     try {
       setLoading(true);
       const response = await axios.get<ProjectsResponse>(
-        `http://localhost:3000/api/manim/projects?page=${page}&limit=10`
+        `http://localhost:3000/api/manim/projects?page=${page}&limit=10`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
       );
       setProjects(response.data.data);
       setPagination(response.data.pagination);

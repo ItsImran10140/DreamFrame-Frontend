@@ -9,14 +9,18 @@ export type Video = {
   trimEnd?: number;
 };
 
+// http://localhost:3000/api/manim/video/${video.id}
+
 export const processVideosFromApi = (videos: Video[] = []): Video[] => {
-  return videos.map((video, index) => ({
+  const finalVideo = videos.map((video, index) => ({
     ...video,
     url: video.url || `http://localhost:3000/api/manim/video/${video.id}`,
     name: video.name || `Video ${index + 1}`,
     trimStart: video.trimStart || 0,
     trimEnd: video.trimEnd || video.duration || 0,
   }));
+  console.log("Final Video" + JSON.stringify(finalVideo));
+  return finalVideo;
 };
 
 export const formatDuration = (seconds: number): string => {
