@@ -12,7 +12,7 @@ const FloatingBlobBackground = ({ children, className = "" }: any) => {
         <div
           className="absolute w-80 h-80 opacity-40 animate-pulse"
           style={{
-            background: "linear-gradient(45deg, #6366f1  , #1e1b4b)",
+            background: "linear-gradient(45deg, #00ff88  , #00ffff)",
             borderRadius: "30% 70% 70% 30% / 30% 30% 70% 70%",
             filter: "blur(2px)",
             top: "-10%",
@@ -25,7 +25,7 @@ const FloatingBlobBackground = ({ children, className = "" }: any) => {
         <div
           className="absolute w-96 h-72 opacity-35"
           style={{
-            background: "linear-gradient(-45deg, #8b5cf6  , #312e81)",
+            background: "linear-gradient(-45deg, #00ddff  , #00ff99)",
             borderRadius: "70% 30% 30% 70% / 70% 70% 30% 30%",
             filter: "blur(2px)",
             top: "-5%",
@@ -38,7 +38,7 @@ const FloatingBlobBackground = ({ children, className = "" }: any) => {
         <div
           className="absolute w-72 h-96 opacity-30"
           style={{
-            background: "linear-gradient(90deg, #7c3aed  , #1e3a8a)",
+            background: "linear-gradient(90deg, #33ff99  , #00ffdd)",
             borderRadius: "60% 40% 70% 30% / 40% 60% 30% 70%",
             filter: "blur(2px)",
             bottom: "-8%",
@@ -51,7 +51,7 @@ const FloatingBlobBackground = ({ children, className = "" }: any) => {
         <div
           className="absolute w-88 h-80 opacity-40"
           style={{
-            background: "linear-gradient(180deg, #a855f7  , #1e40af)",
+            background: "linear-gradient(180deg, #00ccff  , #44ff88)",
             borderRadius: "40% 60% 30% 70% / 60% 40% 70% 30%",
             filter: "blur(2px)",
             bottom: "-10%",
@@ -64,7 +64,7 @@ const FloatingBlobBackground = ({ children, className = "" }: any) => {
         <div
           className="absolute w-64 h-48 opacity-25"
           style={{
-            background: "linear-gradient(0deg, #9333ea  , #1d4ed8)",
+            background: "linear-gradient(0deg, #66ffcc  , #00ff77)",
             borderRadius: "50% 50% 80% 20% / 30% 70% 30% 70%",
             filter: "blur(2px)",
             top: "-3%",
@@ -77,7 +77,7 @@ const FloatingBlobBackground = ({ children, className = "" }: any) => {
         <div
           className="absolute w-56 h-72 opacity-25"
           style={{
-            background: "linear-gradient(45deg, #8b5cf6  , #1e3a8a)",
+            background: "linear-gradient(45deg, #00ff88  , #33ffaa)",
             borderRadius: "80% 20% 50% 50% / 70% 30% 70% 30%",
             filter: "blur(2px)",
             top: "35%",
@@ -90,7 +90,7 @@ const FloatingBlobBackground = ({ children, className = "" }: any) => {
         <div
           className="absolute w-48 h-64 opacity-30"
           style={{
-            background: "linear-gradient(-90deg, #a78bfa  , #1e40af)",
+            background: "linear-gradient(-90deg, #00ffdd  , #22ff88)",
             borderRadius: "20% 80% 50% 50% / 30% 70% 30% 70%",
             filter: "blur(2px)",
             top: "40%",
@@ -103,7 +103,7 @@ const FloatingBlobBackground = ({ children, className = "" }: any) => {
         <div
           className="absolute w-60 h-40 opacity-20"
           style={{
-            background: "linear-gradient(135deg, #ff99aa , #dd44ff)",
+            background: "linear-gradient(135deg, #44ffaa , #00ddff)",
             borderRadius: "50% 50% 20% 80% / 70% 30% 70% 30%",
             filter: "blur(2px)",
             bottom: "-2%",

@@ -174,12 +174,12 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
 
       {/* Sidebar content */}
       <div
-        className={`h-full bg-zinc-950/10 border-r border-zinc-700 flex flex-col ${
+        className={`h-full bg-zinc-950/10 border-r border-zinc-800/40 flex flex-col ${
           isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         } transition-opacity duration-300`}
       >
         {/* Header */}
-        <div className="p-4 border-b border-zinc-700 flex justify-between items-center">
+        <div className="p-4 border-b border-zinc-700/40 flex justify-between items-center">
           <h2 className="text-lg font-medium text-zinc-200">Projects</h2>
           <button
             onClick={refesh}
@@ -257,7 +257,7 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
 
         {toggleOpen ? (
           <div
-            className={`border-t border-r border-l p-2 bg-zinc-800/20  rounded-t-lg border-zinc-700 transition-all duration-300 ease-in-out ${
+            className={`border-t border-r border-l p-2 bg-zinc-800/40  rounded-t-lg border-zinc-700/40 transition-all duration-300 ease-in-out ${
               toggleOpen
                 ? "translate-y-0 opacity-100"
                 : "translate-y-full opacity-0"
@@ -303,9 +303,9 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
 
         <div
           onClick={() => setToggleOpen(!toggleOpen)}
-          className="p-4 border-t border-zinc-700 flex justify-between items-center"
+          className="p-4 border-t border-zinc-700/40 flex justify-between items-center "
         >
-          <div className="flex items-center border w-full p-2 border-zinc-500/30 rounded-lg cursor-pointer hover:bg-neutral-800/20">
+          <div className="flex items-center border w-full p-2 border-zinc-500/30 rounded-lg cursor-pointer hover:bg-neutral-800/20 bg-zinc-800/40">
             <div className="bg-zinc-500 h-6 w-6 rounded-full flex justify-center items-center mr-2">
               I
             </div>

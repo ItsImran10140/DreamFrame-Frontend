@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 
 // Create axios instance with base configuration
@@ -67,5 +68,7 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+export const googleAuth = (code: any) => api.get(`/google?code=${code}`);
 
 export default api;

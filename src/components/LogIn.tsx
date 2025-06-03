@@ -6,6 +6,8 @@ import StarBorder from "../UI/border";
 import SpotlightCard from "../UI/Card";
 import { useState, useEffect } from "react";
 import { useAuth } from "./AuthContext";
+import { googleAuth } from "./axios";
+import { useGoogleLogin } from "@react-oauth/google";
 
 // Form validation helpers
 const validateEmail = (email: string): boolean => {
@@ -22,7 +24,7 @@ const LogIn = () => {
   const [error, setError] = useState("");
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
 
-  const { isAuthenticated, signInUser } = useAuth();
+  const { isAuthenticated, signInUser, setGoogleAuth } = useAuth();
   const navigate = useNavigate();
 
   // Check if user is already logged in
@@ -91,10 +93,43 @@ const LogIn = () => {
     }
   };
 
-  const handleGoogleSignIn = async () => {
-    setError("Google sign-in is not implemented yet. Please use email login.");
-    // TODO: Implement Google OAuth integration
+  // const handleGoogleSignIn = async () => {
+  // setError("Google sign-in is not implemented yet. Please use email login.");
+  // TODO: Implement Google OAuth integration
+  // };
+
+  const responseGoogle = async (authResult: any) => {
+    setLoading(true);
+    setError("");
+
+    try {
+      if (authResult["code"]) {
+        const result = await googleAuth(authResult["code"]);
+        const token = result.data.token;
+        const user = result.data.user;
+
+        // Update auth context directly
+        setGoogleAuth({ token, user });
+
+        // Navigate to hero page
+        navigate("/hero", { replace: true });
+      }
+    } catch (error: any) {
+      console.error("Error while requesting google code", error);
+      setError("Google authentication failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
+
+  const googleSignUp = useGoogleLogin({
+    onSuccess: responseGoogle,
+    onError: (error) => {
+      console.error("Google login error:", error);
+      setError("Google authentication failed. Please try again.");
+    },
+    flow: "auth-code",
+  });
 
   // Render validation errors
   const renderValidationErrors = () => {
@@ -114,7 +149,7 @@ const LogIn = () => {
   return (
     <div className="relative min-h-screen overflow-hidden">
       {/* Video Background */}
-      <video
+      {/* <video
         className="absolute top-0 left-0 w-full h-full object-cover z-0"
         autoPlay
         loop
@@ -124,7 +159,7 @@ const LogIn = () => {
       >
         <source src="/hv.mp4" type="video/mp4" />
         Your browser does not support the video tag.
-      </video>
+      </video> */}
 
       <div className="relative z-20 flex bg-[#0C0C0C]/95 items-center justify-center min-h-screen text-white">
         <form onSubmit={handleSignIn} noValidate>
@@ -202,7 +237,7 @@ const LogIn = () => {
 
                 <button
                   type="button"
-                  onClick={handleGoogleSignIn}
+                  onClick={googleSignUp}
                   disabled={loading}
                   className="border w-full h-10 rounded-xl flex justify-center items-center bg-neutral-100 hover:bg-neutral-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
