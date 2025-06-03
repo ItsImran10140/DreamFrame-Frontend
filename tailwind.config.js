@@ -7,7 +7,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        title: ["Cinzel Decorative"]
+        title: ["Cinzel Decorative"],
+        title2: ["Major Mono Display"]
       },
       keyframes: {
         shine: {
