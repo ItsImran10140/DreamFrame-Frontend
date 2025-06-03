@@ -268,7 +268,7 @@ const Hero = () => {
 
   return (
     <FloatingBlobBackground className="">
-      <div className="h-screen flex flex-col  md:flex-row bg-zinc-950/40 text-gray-200 overflow-hidden ">
+      <div className="h-screen flex flex-col md:flex-row bg-black text-gray-200 overflow-hidden ">
         {/* <div className="flex h-screen flex-col md:flex-row bg-zinc-200/60 text-gray-200 overflow-hidden border w-full absolute z-10"> */}
         {/* Sidebar */}
         <div className="w-full md:w-auto">
@@ -286,7 +286,7 @@ const Hero = () => {
 
         <div className="flex flex-col md:flex-row flex-1 overflow-hidden ">
           {/* Code Editor Section */}
-          <div className="w-full md:w-1/2 border-r border-zinc-700 flex flex-col">
+          <div className="w-full md:w-1/2 border-r-[0.75px] border-zinc-700/40 flex flex-col">
             <div className="h-[70vh] md:h-[95%] p-2 md:p-4 md:pb-2 flex flex-col">
               {/* Editor Header */}
               <div className="flex justify-between items-center mb-2">
@@ -306,7 +306,7 @@ const Hero = () => {
                 >
                   {runningCode ? (
                     <>
-                      <div className="animate-spin rounded-full h-3 w-3 md:h-4 md:w-4 border-t-2 border-b-2 border-white"></div>
+                      <div className="animate-spin rounded-full h-3 w-3 md:h-4 md:w-4 border-t-[0.75px] border-b-[0.75px] border-green-500"></div>
                       <span className="hidden md:inline">Running...</span>
                       <span className="inline md:hidden">Run...</span>
                     </>
@@ -322,7 +322,7 @@ const Hero = () => {
               </div>
 
               {/* Monaco Editor or Response Log */}
-              <div className="flex-1 overflow-hidden rounded-lg border border-zinc-800  ">
+              <div className="flex-1 overflow-hidden rounded-lg border-[0.75px] border-zinc-800/50  ">
                 {loading ? (
                   <div className="flex items-center justify-center h-full">
                     <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-zinc-500"></div>
@@ -377,7 +377,7 @@ const Hero = () => {
                       handleSendPrompt()
                     }
                     disabled={generatingCode || runningCode}
-                    className={`w-full bg-zinc-900/20 border border-zinc-800 rounded-l-3xl px-3 md:px-4 py-1.5 text-gray-200 placeholder:text-gray-400 focus:outline-none text-sm md:text-md ${
+                    className={`w-full bg-zinc-900/20 border-[0.75px] border-zinc-800/40 rounded-l-3xl px-3 md:px-4 py-1.5 text-gray-200 placeholder:text-gray-400 focus:outline-none text-sm md:text-md ${
                       generatingCode || runningCode
                         ? "opacity-50 cursor-not-allowed"
                         : ""
@@ -388,7 +388,7 @@ const Hero = () => {
                 <button
                   onClick={handleSendPrompt}
                   disabled={generatingCode || runningCode}
-                  className={`bg-zinc-800/40 hover:bg-zinc-800 cursor-pointer text-white px-3 md:px-4 py-[8px] md:py-[9px] rounded-r-3xl flex border-[0.75px] border-zinc-600 items-center justify-center transition-colors duration-200 ${
+                  className={`bg-zinc-800/40 hover:bg-zinc-800 cursor-pointer text-white px-3 md:px-4 py-[8px] md:py-[9px] rounded-r-3xl flex border-[0.75px] border-zinc-800/40 items-center justify-center transition-colors duration-200 ${
                     generatingCode || runningCode
                       ? "opacity-50 cursor-not-allowed"
                       : ""
@@ -412,11 +412,11 @@ const Hero = () => {
               </h2>
               <div className="h-screen overflow-y-scroll no-scrollbar">
                 {/* Video editor container */}
-                <div className="bg-zinc-900/50 rounded-lg border-[0.75px] border-zinc-800 mb-2 pb-2 md:mb-3 flex-shrink-0 overflow-hidden mt-2">
+                <div className="bg-zinc-800/40 rounded-lg border-[0.75px] border-zinc-800/40 mb-2 pb-2 md:mb-3 flex-shrink-0 overflow-hidden mt-2">
                   {loading ? (
                     <div className="flex items-center justify-center h-full">
                       <div className="flex flex-col items-center">
-                        <div className="animate-spin rounded-full h-6 w-6 md:h-8 md:w-8 border-t-2 border-b-2 border-indigo-500 mb-2 md:mb-4"></div>
+                        <div className="animate-spin rounded-full h-6 w-6 md:h-8 md:w-8 border-t-2 border-b-2 border-green-500 mb-2 md:mb-4"></div>
                         <p className="text-gray-400 text-sm">
                           Loading video editor...
                         </p>
@@ -453,7 +453,7 @@ const Hero = () => {
                 </div>
 
                 {/* Explanation section */}
-                <div className="flex-grow overflow-hidden rounded-lg border border-zinc-700 ">
+                <div className="flex-grow overflow-hidden rounded-lg border-[0.75px] border-zinc-800/40 bg-zinc-800/40">
                   <div className="h-full overflow-y-auto">
                     <MarkdownExplanation explanation={project?.explanation} />
                   </div>
