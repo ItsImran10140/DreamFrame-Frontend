@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link } from "react-router-dom";
-import ShinyText from "../UI/HeroText";
-import { OrbitalSlider } from "../UI/OrbitalSlider";
+import ShinyText from "../../UI/HeroText";
+import { OrbitalSlider } from "../../UI/OrbitalSlider";
 
 const LandingPage = () => {
   const handleVideoError = (e: any) => {
