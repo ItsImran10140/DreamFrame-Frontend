@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 
 import { useState, useRef, useEffect } from "react";
-import { Play, Pause } from "lucide-react";
+import { Play, Pause, Download } from "lucide-react";
 
 type VideoType = {
   id: string;
@@ -34,15 +34,13 @@ const VideoEditor = ({ projectVideos = [] }: VideoEditorProps) => {
     const processedVideos = projectVideos.map((video, index) => ({
       ...video,
       id: video.id || `video-${index}`,
-      name: "Video",
+      name: video.name || "Video",
       trimStart: video.trimStart || 0,
       trimEnd: video.trimEnd || video.duration || 0,
     }));
 
     setVideos(processedVideos);
-    console.log("====================================================");
     console.log("Processed Videos:", processedVideos);
-    console.log("====================================================");
     if (processedVideos.length > 0) {
       setSelectedVideo(processedVideos[0].id);
     }
@@ -83,6 +81,43 @@ const VideoEditor = ({ projectVideos = [] }: VideoEditorProps) => {
       });
     }
     setIsPlaying(!isPlaying);
+  };
+
+  const handleDownload = async () => {
+    if (!selectedVideo) return;
+
+    const currentVideo = videos.find((v) => v.id === selectedVideo);
+    if (!currentVideo) return;
+
+    try {
+      // Fetch the video blob
+      const response = await fetch(currentVideo.url);
+      const blob = await response.blob();
+
+      // Create download link
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+
+      // Extract file extension from URL or default to mp4
+      const urlPath = currentVideo.url.split("?")[0]; // Remove query parameters
+      const extension = urlPath.split(".").pop()?.toLowerCase() || "mp4";
+
+      // Set filename
+      link.download = `${currentVideo.name}.${extension}`;
+
+      // Trigger download
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      // Clean up
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading video:", error);
+      // Fallback: open video in new tab
+      window.open(currentVideo.url, "_blank");
+    }
   };
 
   const handleTimelineClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -129,12 +164,33 @@ const VideoEditor = ({ projectVideos = [] }: VideoEditorProps) => {
     setCurrentTime(globalTime);
   };
 
+  const currentVideoData = videos.find((v) => v.id === selectedVideo);
+
   return (
     <div className={`flex flex-col h-full`}>
       {/* Timeline Section */}
-      <div className="p-2  border-t border-zinc-950">
-        <div className="flex justify-between mb-1 "></div>
-        <div className="flex-1 flex justify-center  items-center p-2 bg-black">
+      <div className="p-2 border-t border-zinc-950">
+        <div className="flex justify-between mb-1">
+          {/* Video title and download button */}
+          <div className="flex items-center gap-2">
+            {currentVideoData && (
+              <>
+                <span className="text-sm text-gray-300">
+                  {currentVideoData.name}
+                </span>
+                <button
+                  onClick={handleDownload}
+                  className="p-1 rounded-full hover:bg-zinc-700 text-gray-300 hover:text-white transition-colors"
+                  title="Download current video"
+                  disabled={!selectedVideo}
+                >
+                  <Download size={16} />
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+        <div className="flex-1 flex justify-center items-center p-2 bg-black">
           {selectedVideo ? (
             <video
               ref={videoRef}
@@ -157,7 +213,7 @@ const VideoEditor = ({ projectVideos = [] }: VideoEditorProps) => {
       {/* Video Player Section */}
       <div className="flex-1 flex flex-col">
         {/* Controls */}
-        <div className="p-2 bg-zinc-950  flex items-center gap-2 mx-2">
+        <div className="p-2 bg-zinc-950 flex items-center gap-2 mx-2">
           <div className="flex gap-1">
             <button
               onClick={togglePlay}
@@ -168,6 +224,7 @@ const VideoEditor = ({ projectVideos = [] }: VideoEditorProps) => {
             </button>
           </div>
           <div
+            ref={timelineRef}
             className="flex-1 h-2 bg-zinc-700 rounded overflow-hidden cursor-pointer"
             onClick={handleTimelineClick}
           >
