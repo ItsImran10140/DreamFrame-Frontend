@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Clock } from "lucide-react";
+import { Riple } from "react-loading-indicators";
 
 const SideBarList = ({
   loading,
@@ -13,7 +14,7 @@ const SideBarList = ({
     <div className="flex-1 overflow-y-auto">
       {loading && !projects.length ? (
         <div className="flex items-center justify-center h-32">
-          <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-zinc-500"></div>
+          <Riple color="#dddddd" size="small" text="" textColor="" />
         </div>
       ) : error ? (
         <div className="p-4 text-zinc-400 text-sm">{error}</div>

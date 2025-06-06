@@ -12,7 +12,7 @@ const CodeHeader = ({
     <div className="flex justify-between items-center mb-2">
       <div className="truncate w-[400px]">
         <h2 className="text-base md:text-lg font-semibold text-zinc-400 truncate">
-          Dynamo {project && `- ${project.prompt}`}
+          {project && `- ${project.prompt}`}
         </h2>
       </div>
       <button

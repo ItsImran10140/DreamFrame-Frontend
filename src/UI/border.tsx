@@ -46,6 +46,3 @@ const StarBorder = <T extends React.ElementType = "button">({
 };
 
 export default StarBorder;
-
-// gradient-to-b from-black to-gray-900
-// py-[16px] px-[26px]

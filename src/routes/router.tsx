@@ -5,7 +5,6 @@ import LandingPage from "../components/LandingPage/LandingPage";
 import SignUp from "../auth/SignUp";
 import Hero from "../components/Hero";
 import PrivateRoute from "../routes/PrivateRoute";
-import Settings from "../components/settings/Settings";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import LogIn from "../auth/LogIn";
 
@@ -35,7 +34,7 @@ export const router = createBrowserRouter([
       </GoogleWrapper>
     ),
   },
-  { path: "/settings", element: <Settings /> },
+  // { path: "/settings", element: <Settings /> },
   {
     path: "/hero",
     element: (

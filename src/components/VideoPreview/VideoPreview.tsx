@@ -1,3 +1,4 @@
+import { Riple } from "react-loading-indicators";
 import VideoEditor from "./VideoEditor";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -14,7 +15,8 @@ const VideoPreview = ({
       {loading ? (
         <div className="flex items-center justify-center h-[50vh]">
           <div className="flex flex-col items-center">
-            <div className="animate-spin rounded-full h-6 w-6 md:h-8 md:w-8 border-t-2 border-b-2 border-zinc-500 mb-2 md:mb-4"></div>
+            {/* <div className="animate-spin rounded-full h-6 w-6 md:h-8 md:w-8 border-t-2 border-b-2 border-zinc-500 mb-2 md:mb-4"></div> */}
+            <Riple color="#dddddd" size="medium" text="" textColor="" />
             <p className="text-gray-400 text-sm">Loading video editor...</p>
           </div>
         </div>

@@ -136,12 +136,7 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
           />
         )}
         {/* User profile toggle */}
-        <UserProfile
-          // setToggleOpen={setToggleOpen}
-          // toggleOpen={toggleOpen}
-          getUserInitial={getUserInitial}
-          user={user}
-        />
+        <UserProfile getUserInitial={getUserInitial} user={user} />
       </div>
     </div>
   );

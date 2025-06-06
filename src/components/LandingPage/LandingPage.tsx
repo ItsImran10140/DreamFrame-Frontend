@@ -120,13 +120,7 @@ const LandingPage = () => {
               technology meets user-friendly SEO tools.
             </p>
           </div>
-          {/* <div className="mb-10">
-            <Link to="/signup">
-              <button className="border border-zinc-200/30 hover:bg-orange-300/40 hover:border-zinc-300/60  text-zinc-200 hover:text-zinc-200 font-light py-2 px-6 rounded-full transition-colors">
-                Get Started
-              </button>
-            </Link>
-          </div> */}
+
           <div className="rounded-3xl h-full bg-black/60 shadow-[0_0_50px_theme('colors.orange.300')] flex justify-center">
             <div className="mx-4 mt-4 pb-2  h-full">
               <img
@@ -251,5 +245,3 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
-
-// now give me code in a component so i can use it any place and also i can chose the images i want to put in div insted of solid color.

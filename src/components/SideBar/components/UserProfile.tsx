@@ -11,7 +11,6 @@ const UserProfile = ({
   const { toggle } = useProfileToggle();
 
   return (
-    // () => setToggleOpen(!toggleOpen)
     <div
       onClick={toggle}
       className="p-4 border-t border-zinc-700/40 flex justify-between items-center cursor-pointer"
