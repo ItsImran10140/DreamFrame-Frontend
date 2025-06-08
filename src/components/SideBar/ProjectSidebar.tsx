@@ -47,10 +47,11 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
 
   // Load projects on mount
   useEffect(() => {
-    const timer = setTimeout(() => {
+    fetchProjects(currentPage);
+    const timer = setInterval(() => {
       fetchProjects(currentPage);
-    }, 1000);
-    return () => clearTimeout(timer);
+    }, 10000);
+    return () => clearInterval(timer);
   }, []);
 
   // Handle pagination

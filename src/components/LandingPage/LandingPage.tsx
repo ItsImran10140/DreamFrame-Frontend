@@ -57,7 +57,7 @@ const LandingPage = () => {
 
   return (
     <>
-      <div className="relative min-h-screen overflow-hidden bg-black pb-32 ">
+      <div className="relative min-h-screen overflow-hidden bg-black pb-32 mt-[-40px]">
         {/* Video Background */}
         <video
           className="absolute top-0 left-0 w-full h-full object-contain z-0"
@@ -121,13 +121,27 @@ const LandingPage = () => {
             </p>
           </div>
 
-          <div className="rounded-3xl h-full bg-black/60 shadow-[0_0_50px_theme('colors.orange.300')] flex justify-center">
-            <div className="mx-4 mt-4 pb-2  h-full">
-              <img
+          <div className="rounded-3xl h-full bg-black/60 shadow-[0_0_50px_theme('colors.orange.300')] flex justify-center pt-4">
+            <div className="h-full px-4">
+              <video
+                className="w-full h-[97%] opacity-70 rounded-3xl object-contain"
+                autoPlay
+                loop
+                muted
+                playsInline
+                onError={handleVideoError}
+                onLoadedData={handleVideoLoad}
+                preload="auto"
+              >
+                <source src="/dynamo_demo.mp4" type="video/mp4" />
+                {/* Fallback message instead of broken image */}
+                Your browser does not support the video tag.
+              </video>
+              {/* <img
                 src="/saas.png"
                 alt="saas"
                 className="h-[97%] opacity-70 rounded-3xl"
-              />
+              /> */}
             </div>
           </div>
         </div>
