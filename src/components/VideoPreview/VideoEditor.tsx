@@ -83,6 +83,57 @@ const VideoEditor = ({ projectVideos = [] }: VideoEditorProps) => {
     setIsPlaying(!isPlaying);
   };
 
+  const getVideoMimeTypeAndExtension = async (
+    url: string
+  ): Promise<{ mimeType: string; extension: string }> => {
+    try {
+      // First, try to get content type from HEAD request
+      const headResponse = await fetch(url, { method: "HEAD" });
+      const contentType = headResponse.headers.get("content-type");
+
+      if (contentType) {
+        // Map common video MIME types to extensions
+        const mimeToExtension: Record<string, string> = {
+          "video/mp4": "mp4",
+          "video/webm": "webm",
+          "video/ogg": "ogg",
+          "video/avi": "avi",
+          "video/mov": "mov",
+          "video/quicktime": "mov",
+          "video/x-msvideo": "avi",
+        };
+
+        const extension = mimeToExtension[contentType] || "mp4";
+        return { mimeType: contentType, extension };
+      }
+    } catch (error) {
+      console.warn("Could not determine content type from headers:", error);
+    }
+
+    // Fallback: try to extract from URL path (before query parameters)
+    try {
+      const urlPath = url.split("?")[0];
+      const pathExtension = urlPath.split(".").pop()?.toLowerCase();
+
+      if (
+        pathExtension &&
+        ["mp4", "webm", "ogg", "avi", "mov"].includes(pathExtension)
+      ) {
+        return {
+          mimeType: `video/${
+            pathExtension === "mov" ? "quicktime" : pathExtension
+          }`,
+          extension: pathExtension,
+        };
+      }
+    } catch (error) {
+      console.warn("Could not extract extension from URL:", error);
+    }
+
+    // Default to mp4 if all else fails
+    return { mimeType: "video/mp4", extension: "mp4" };
+  };
+
   const handleDownload = async () => {
     if (!selectedVideo) return;
 
@@ -90,21 +141,31 @@ const VideoEditor = ({ projectVideos = [] }: VideoEditorProps) => {
     if (!currentVideo) return;
 
     try {
+      // Get the proper MIME type and extension
+      const { mimeType, extension } = await getVideoMimeTypeAndExtension(
+        currentVideo.url
+      );
+
       // Fetch the video blob
       const response = await fetch(currentVideo.url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const blob = await response.blob();
 
+      // Create a new blob with the correct MIME type if needed
+      const typedBlob = new Blob([blob], { type: mimeType });
+
       // Create download link
-      const url = window.URL.createObjectURL(blob);
+      const url = window.URL.createObjectURL(typedBlob);
       const link = document.createElement("a");
       link.href = url;
 
-      // Extract file extension from URL or default to mp4
-      const urlPath = currentVideo.url.split("?")[0]; // Remove query parameters
-      const extension = urlPath.split(".").pop()?.toLowerCase() || "mp4";
-
-      // Set filename
-      link.download = `${currentVideo.name}.${extension}`;
+      // Clean the video name and set proper filename
+      const cleanName =
+        currentVideo.name.replace(/[^a-zA-Z0-9_\-\s]/g, "").trim() || "video";
+      link.download = `${cleanName}.${extension}`;
 
       // Trigger download
       document.body.appendChild(link);
@@ -113,10 +174,34 @@ const VideoEditor = ({ projectVideos = [] }: VideoEditorProps) => {
 
       // Clean up
       window.URL.revokeObjectURL(url);
+
+      console.log(`Downloaded: ${cleanName}.${extension}`);
     } catch (error) {
       console.error("Error downloading video:", error);
-      // Fallback: open video in new tab
-      window.open(currentVideo.url, "_blank");
+
+      // Enhanced fallback: try to open with proper filename suggestion
+      try {
+        const { extension } = await getVideoMimeTypeAndExtension(
+          currentVideo.url
+        );
+        const cleanName =
+          currentVideo.name.replace(/[^a-zA-Z0-9_\-\s]/g, "").trim() || "video";
+
+        // Create a temporary link with download attribute
+        const tempLink = document.createElement("a");
+        tempLink.href = currentVideo.url;
+        tempLink.download = `${cleanName}.${extension}`;
+        tempLink.target = "_blank";
+        tempLink.rel = "noopener noreferrer";
+
+        document.body.appendChild(tempLink);
+        tempLink.click();
+        document.body.removeChild(tempLink);
+      } catch (fallbackError) {
+        console.error("Fallback download also failed:", fallbackError);
+        // Final fallback: just open the URL
+        window.open(currentVideo.url, "_blank");
+      }
     }
   };
 
