@@ -61,6 +61,34 @@ const Hero = () => {
     }
   };
 
+  // Function to reset all data for a new project
+  const resetForNewProject = () => {
+    // Reset all state variables to their initial values
+    setProject(null);
+    setJobId("");
+    setLoading(false);
+    setGeneratingCode(false);
+    setRunningCode(false);
+    setError(null);
+    setSaveStatus(null);
+    setPrompt("");
+    setResponseLog("");
+
+    // Clear the editor content if it exists
+    if (editorRef.current) {
+      editorRef.current.setValue("");
+    }
+
+    // Clear URL parameters
+    const url = new URL(window.location.href);
+    url.searchParams.delete("projectId");
+    window.history.pushState({}, "", url.toString());
+
+    // Optional: Show a brief status message
+    setSaveStatus("Ready for new project!");
+    setTimeout(() => setSaveStatus(null), 2000);
+  };
+
   // Initial load - can be removed or used with a default project ID
   useEffect(() => {
     // Only fetch if you have a default project or jobId from URL params
@@ -279,6 +307,7 @@ const Hero = () => {
             onSelectProject={handleSelectProject}
             currentProjectId={project?.id || null}
             onShowSettings={handleShowSettings}
+            onNewProject={resetForNewProject}
           />
         </div>
         {/* Status message */}

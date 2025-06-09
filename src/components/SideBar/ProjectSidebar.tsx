@@ -18,12 +18,14 @@ interface ProjectSidebarProps {
   onSelectProject: (projectId: string) => void;
   currentProjectId: string | null;
   onShowSettings: any;
+  onNewProject: () => void;
 }
 
 const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
   onSelectProject,
   currentProjectId,
   onShowSettings,
+  onNewProject,
 }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -75,8 +77,12 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
     setIsOpen(!isOpen);
   };
 
-  const refresh = () => {
-    window.location.href = "http://localhost:5173/hero";
+  // const refresh = () => {
+  //   window.location.href = "http://localhost:5173/hero";
+  // };
+
+  const handleNewProject = () => {
+    onNewProject();
   };
 
   const getUserInitial = () => {
@@ -108,7 +114,7 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
         } transition-opacity duration-300`}
       >
         {/* Header */}
-        <Header refresh={refresh} />
+        <Header onNewProject={handleNewProject} />
         {/* Project list */}
         <SideBarList
           loading={loading}
