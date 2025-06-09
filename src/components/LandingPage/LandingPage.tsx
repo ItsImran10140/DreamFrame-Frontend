@@ -34,22 +34,22 @@ const LandingPage = () => {
       image: "/item3.png",
     },
     {
-      id: 1,
+      id: 5,
 
       image: "/item4.png",
     },
     {
-      id: 2,
+      id: 6,
 
       image: "/item5.png",
     },
     {
-      id: 3,
+      id: 7,
 
       image: "/item6.png",
     },
     {
-      id: 4,
+      id: 8,
 
       image: "/item7.png",
     },
