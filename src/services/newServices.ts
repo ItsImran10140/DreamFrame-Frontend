@@ -26,14 +26,17 @@ export const generateCode = async (prompt: string): Promise<Response> => {
     throw new Error("Authentication required");
   }
 
-  const response = await fetch("http://localhost:3000/api/manim/generate", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ prompt }),
-  });
+  const response = await fetch(
+    "https://backendapi.dynamooai.org/api/manim/generate",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ prompt }),
+    }
+  );
 
   if (!response.ok) {
     throw new Error("Failed to generate code");

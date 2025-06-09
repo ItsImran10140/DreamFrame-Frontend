@@ -2,7 +2,8 @@
 import axios from "axios";
 import type { AxiosInstance, AxiosResponse } from "axios";
 
-const BASE_URL = "http://localhost:3000/api";
+// const BASE_URL = "http://localhost:3000/api";
+const BASE_URL = "https://backendapi.dynamooai.org/api";
 
 const createApiClient = (): AxiosInstance => {
   const api = axios.create({

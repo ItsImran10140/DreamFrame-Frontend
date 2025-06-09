@@ -30,7 +30,7 @@ const SettingsComponent = ({ onClose }: SettingsComponentProps) => {
     try {
       const token = localStorage.getItem("accessToken");
       const response = await axios.get(
-        "http://localhost:3000/api/manim/profile",
+        "https://backendapi.dynamooai.org/api/manim/profile",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -58,7 +58,7 @@ const SettingsComponent = ({ onClose }: SettingsComponentProps) => {
 
     try {
       await axios.put(
-        "http://localhost:3000/api/manim/profile",
+        "https://backendapi.dynamooai.org/api/manim/profile",
         {
           username,
           email,
@@ -90,7 +90,7 @@ const SettingsComponent = ({ onClose }: SettingsComponentProps) => {
 
     try {
       await axios.put(
-        "http://localhost:3000/api/manim/password",
+        "https://backendapi.dynamooai.org/api/manim/password",
         {
           currentPassword,
           newPassword,
@@ -119,7 +119,7 @@ const SettingsComponent = ({ onClose }: SettingsComponentProps) => {
     setShowDeleteDialog(false);
 
     try {
-      await axios.delete("http://localhost:3000/api/manim/account", {
+      await axios.delete("https://backendapi.dynamooai.org/api/manim/account", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },

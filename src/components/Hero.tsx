@@ -34,7 +34,7 @@ const Hero = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:3000/api/manim/project/${projectId}`,
+        `https://backendapi.dynamooai.org/api/manim/project/${projectId}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -135,7 +135,7 @@ const Hero = () => {
 
       // Save the code - backend will automatically rerun it
       const response = await axios.put(
-        `http://localhost:3000/api/manim/update/project/${project.id}`,
+        `https://backendapi.dynamooai.org/api/manim/update/project/${project.id}`,
         { code: project.code },
         {
           headers: {
@@ -189,7 +189,7 @@ const Hero = () => {
       };
 
       await axios.put(
-        `http://localhost:3000/api/manim/project/${project.id}`,
+        `https://backendapi.dynamooai.org/api/manim/project/${project.id}`,
         updatedProject,
         {
           headers: {
@@ -223,14 +223,17 @@ const Hero = () => {
       }
 
       // Make a request to generate Manim code with streaming response
-      const response = await fetch("http://localhost:3000/api/manim/generate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ prompt: prompt }),
-      });
+      const response = await fetch(
+        "https://backendapi.dynamooai.org/api/manim/generate",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ prompt: prompt }),
+        }
+      );
 
       // Process the streaming response
       const reader = response.body?.getReader();

@@ -51,7 +51,8 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Constants
-const API_BASE_URL = "http://localhost:3000/api/manim";
+// const API_BASE_URL = "http://localhost:3000/api/manim";
+const API_BASE_URL = "https://backendapi.dynamooai.org/api/manim";
 const TOKEN_KEYS = {
   ACCESS: "accessToken",
   REFRESH: "refreshToken",

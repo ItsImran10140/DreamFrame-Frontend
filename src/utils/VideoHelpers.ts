@@ -14,7 +14,9 @@ export type Video = {
 export const processVideosFromApi = (videos: Video[] = []): Video[] => {
   return videos.map((video, index) => ({
     ...video,
-    url: video.url || `http://localhost:3000/api/manim/video/${video.id}`,
+    url:
+      video.url ||
+      `https://backendapi.dynamooai.org/api/manim/video/${video.id}`,
     name: video.name || `Video ${index + 1}`,
     trimStart: video.trimStart || 0,
     trimEnd: video.trimEnd || video.duration || 0,

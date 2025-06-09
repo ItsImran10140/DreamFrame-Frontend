@@ -3,7 +3,8 @@ import axios from "axios";
 
 // Create axios instance with base configuration
 export const api = axios.create({
-  baseURL: "http://localhost:3000/api/manim",
+  // baseURL: "http://localhost:3000/api/manim",
+  baseURL: "https://backendapi.dynamooai.org/api/manim",
   timeout: 10000, // 10 seconds timeout
   headers: {
     "Content-Type": "application/json",
@@ -41,7 +42,8 @@ api.interceptors.response.use(
         if (refreshToken) {
           // Try to refresh the token
           const response = await axios.post(
-            "http://localhost:3000/api/manim/refresh",
+            // "http://localhost:3000/api/manim/refresh",
+            "https://backendapi.dynamooai.org/api/manim/refresh",
             { refreshToken }
           );
 
