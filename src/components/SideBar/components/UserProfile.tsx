@@ -2,12 +2,7 @@
 
 import { useProfileToggle } from "../../../stores/store";
 
-const UserProfile = ({
-  // setToggleOpen,
-  // toggleOpen,
-  getUserInitial,
-  user,
-}: any) => {
+const UserProfile = ({ getUserInitial, user }: any) => {
   const { toggle } = useProfileToggle();
 
   return (

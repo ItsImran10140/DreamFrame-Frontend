@@ -87,12 +87,10 @@ const VideoEditor = ({ projectVideos = [] }: VideoEditorProps) => {
     url: string
   ): Promise<{ mimeType: string; extension: string }> => {
     try {
-      // First, try to get content type from HEAD request
       const headResponse = await fetch(url, { method: "HEAD" });
       const contentType = headResponse.headers.get("content-type");
 
       if (contentType) {
-        // Map common video MIME types to extensions
         const mimeToExtension: Record<string, string> = {
           "video/mp4": "mp4",
           "video/webm": "webm",
@@ -110,7 +108,6 @@ const VideoEditor = ({ projectVideos = [] }: VideoEditorProps) => {
       console.warn("Could not determine content type from headers:", error);
     }
 
-    // Fallback: try to extract from URL path (before query parameters)
     try {
       const urlPath = url.split("?")[0];
       const pathExtension = urlPath.split(".").pop()?.toLowerCase();
@@ -130,7 +127,6 @@ const VideoEditor = ({ projectVideos = [] }: VideoEditorProps) => {
       console.warn("Could not extract extension from URL:", error);
     }
 
-    // Default to mp4 if all else fails
     return { mimeType: "video/mp4", extension: "mp4" };
   };
 
@@ -141,12 +137,10 @@ const VideoEditor = ({ projectVideos = [] }: VideoEditorProps) => {
     if (!currentVideo) return;
 
     try {
-      // Get the proper MIME type and extension
       const { mimeType, extension } = await getVideoMimeTypeAndExtension(
         currentVideo.url
       );
 
-      // Fetch the video blob
       const response = await fetch(currentVideo.url);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -154,32 +148,26 @@ const VideoEditor = ({ projectVideos = [] }: VideoEditorProps) => {
 
       const blob = await response.blob();
 
-      // Create a new blob with the correct MIME type if needed
       const typedBlob = new Blob([blob], { type: mimeType });
 
-      // Create download link
       const url = window.URL.createObjectURL(typedBlob);
       const link = document.createElement("a");
       link.href = url;
 
-      // Clean the video name and set proper filename
       const cleanName =
         currentVideo.name.replace(/[^a-zA-Z0-9_\-\s]/g, "").trim() || "video";
       link.download = `${cleanName}.${extension}`;
 
-      // Trigger download
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
 
-      // Clean up
       window.URL.revokeObjectURL(url);
 
       console.log(`Downloaded: ${cleanName}.${extension}`);
     } catch (error) {
       console.error("Error downloading video:", error);
 
-      // Enhanced fallback: try to open with proper filename suggestion
       try {
         const { extension } = await getVideoMimeTypeAndExtension(
           currentVideo.url
@@ -187,7 +175,6 @@ const VideoEditor = ({ projectVideos = [] }: VideoEditorProps) => {
         const cleanName =
           currentVideo.name.replace(/[^a-zA-Z0-9_\-\s]/g, "").trim() || "video";
 
-        // Create a temporary link with download attribute
         const tempLink = document.createElement("a");
         tempLink.href = currentVideo.url;
         tempLink.download = `${cleanName}.${extension}`;
@@ -199,7 +186,6 @@ const VideoEditor = ({ projectVideos = [] }: VideoEditorProps) => {
         document.body.removeChild(tempLink);
       } catch (fallbackError) {
         console.error("Fallback download also failed:", fallbackError);
-        // Final fallback: just open the URL
         window.open(currentVideo.url, "_blank");
       }
     }

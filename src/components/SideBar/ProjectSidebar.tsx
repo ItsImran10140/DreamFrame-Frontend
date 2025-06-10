@@ -29,7 +29,6 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  // const [toggleOpen, setToggleOpen] = useState(false);
   const { signOut }: any = UserAuth();
   const navigate = useNavigate();
   const { projects, loading, error, pagination, fetchProjects } = useSidebar();
@@ -47,7 +46,6 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
     }
   };
 
-  // Load projects on mount
   useEffect(() => {
     fetchProjects(currentPage);
     const timer = setInterval(() => {
@@ -56,7 +54,6 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
     return () => clearInterval(timer);
   }, []);
 
-  // Handle pagination
   const handleNextPage = () => {
     if (pagination && currentPage < pagination.pages) {
       const nextPage = currentPage + 1;
@@ -76,10 +73,6 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
-
-  // const refresh = () => {
-  //   window.location.href = "http://localhost:5173/hero";
-  // };
 
   const handleNewProject = () => {
     onNewProject();
