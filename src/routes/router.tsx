@@ -3,13 +3,13 @@
 import { createBrowserRouter } from "react-router-dom";
 import LandingPage from "../components/LandingPage/LandingPage";
 import SignUp from "../auth/SignUp";
-import Hero from "../components/Hero";
+import Hero from "../components/Hero/Hero";
 import PrivateRoute from "../routes/PrivateRoute";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import LogIn from "../auth/LogIn";
 
 const GoogleWrapper = ({ children }: any) => (
-  <GoogleOAuthProvider clientId="508252238705-g8tdudir370g918k2ivsc578bsic3ss6.apps.googleusercontent.com">
+  <GoogleOAuthProvider clientId={process.env.GOOGLE_CLIENT_ID || ""}>
     {children}
   </GoogleOAuthProvider>
 );
@@ -34,7 +34,6 @@ export const router = createBrowserRouter([
       </GoogleWrapper>
     ),
   },
-  // { path: "/settings", element: <Settings /> },
   {
     path: "/hero",
     element: (
