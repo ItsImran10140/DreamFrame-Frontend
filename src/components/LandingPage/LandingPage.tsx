@@ -116,8 +116,9 @@ const LandingPage = () => {
           </div>
           <div>
             <p className="text-zinc-300/40 text-[18px] text-center mb-16">
-              Elevate your site’s visibility effortlessly with AI, where smart
-              technology meets user-friendly SEO tools.
+              Bring mathematical ideas to life instantly with AI, where simple
+              descriptions become captivating animated explanations
+              automatically.
             </p>
           </div>
 
@@ -165,7 +166,7 @@ const LandingPage = () => {
               <div className="absolute z-30  bottom-0 w-full h-[320px] flex justify-between">
                 <div className="w-[480px] px-2">
                   <p className="text-xl mb-2 text-center text-orange-300/80">
-                    LLM Capability Description
+                    LLM Capability
                   </p>
                   <p className="text-center text-orange-200/60">
                     AI-Powered Code Generation Our advanced language model
@@ -182,7 +183,7 @@ const LandingPage = () => {
                 </div>
                 <div className="w-[480px] px-2  text-center ">
                   <p className="text-xl mb-2 text-center text-orange-300/80">
-                    Manim Library Description
+                    Manim
                   </p>
                   <p className="text-orange-200/60">
                     Manim (Mathematical Animation Engine) is a powerful Python
