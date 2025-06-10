@@ -59,7 +59,7 @@ export const useHero = () => {
     }
   };
 
-  const handleEditorDidMount = (editor: any, monaco: any) => {
+  const handleEditorDidMount = (editor: any) => {
     editorRef.current = editor;
 
     // Focus the editor when mounted
