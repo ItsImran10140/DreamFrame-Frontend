@@ -8,6 +8,7 @@ import { useAuth } from "./AuthContext";
 import { useState, useEffect } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
 import { googleAuth } from "../apis/axios";
+import { ArrowLeft } from "lucide-react";
 
 // Form validation helpers
 const validateEmail = (email: string): boolean => {
@@ -164,20 +165,13 @@ const SignUp = () => {
 
   return (
     <div className="relative min-h-screen overflow-hidden">
-      {/* Video Background */}
-      {/* <video
-        className="absolute top-0 left-0 w-full h-full object-cover z-0"
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="auto"
-      >
-        <source src="/hv.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video> */}
-
-      <div className="relative z-20 flex bg-[#0C0C0C]/95 items-center justify-center min-h-screen text-white">
+      <div className="relative z-20 flex flex-col bg-[#0C0C0C]/95 items-center justify-center min-h-screen text-white">
+        <div className="absolute top-0 px-4 w-full py-4">
+          <ArrowLeft
+            className="hover:bg-zinc-700/60 h-8 w-8 rounded-full p-[6px] cursor-pointer"
+            onClick={() => navigate("/")}
+          />
+        </div>
         <form onSubmit={handleSignup} noValidate>
           <SpotlightCard
             className="custom-spotlight-card w-[500px] h-full"

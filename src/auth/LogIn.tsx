@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "./AuthContext";
 import { googleAuth } from "../apis/axios";
 import { useGoogleLogin } from "@react-oauth/google";
+import { ArrowLeft } from "lucide-react";
 
 // Form validation helpers
 const validateEmail = (email: string): boolean => {
@@ -144,6 +145,12 @@ const LogIn = () => {
   return (
     <div className="relative min-h-screen overflow-hidden">
       <div className="relative z-20 flex bg-[#0C0C0C]/95 items-center justify-center min-h-screen text-white">
+        <div className="absolute top-0 px-4 w-full py-4">
+          <ArrowLeft
+            className="hover:bg-zinc-700/60 h-8 w-8 rounded-full p-[6px] cursor-pointer"
+            onClick={() => navigate("/")}
+          />
+        </div>
         <form onSubmit={handleSignIn} noValidate>
           <SpotlightCard
             className="custom-spotlight-card w-[500px] h-full"
