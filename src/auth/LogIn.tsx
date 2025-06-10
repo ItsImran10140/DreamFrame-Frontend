@@ -10,7 +10,6 @@ import { googleAuth } from "../apis/axios";
 import { useGoogleLogin } from "@react-oauth/google";
 import { ArrowLeft } from "lucide-react";
 
-// Form validation helpers
 const validateEmail = (email: string): boolean => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
@@ -28,26 +27,22 @@ const LogIn = () => {
   const { isAuthenticated, signInUser, setGoogleAuth } = useAuth();
   const navigate = useNavigate();
 
-  // Check if user is already logged in
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/hero", { replace: true });
     }
   }, [isAuthenticated, navigate]);
 
-  // Handle input changes
   const handleInputChange =
     (field: keyof typeof formData) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
       setFormData((prev) => ({ ...prev, [field]: value }));
 
-      // Clear errors when user starts typing
       if (error) setError("");
       if (validationErrors.length > 0) setValidationErrors([]);
     };
 
-  // Form validation
   const validateForm = (): boolean => {
     const errors: string[] = [];
 
@@ -81,7 +76,6 @@ const LogIn = () => {
       const result = await signInUser(formData.email, formData.password);
 
       if (result.success) {
-        // Navigation will be handled by the useEffect when isAuthenticated changes
         navigate("/hero", { replace: true });
       } else {
         setError(result.error || "Login failed");
@@ -104,10 +98,8 @@ const LogIn = () => {
         const token = result.data.token;
         const user = result.data.user;
 
-        // Update auth context directly
         setGoogleAuth({ token, user });
 
-        // Navigate to hero page
         navigate("/hero", { replace: true });
       }
     } catch (error: any) {
@@ -127,7 +119,6 @@ const LogIn = () => {
     flow: "auth-code",
   });
 
-  // Render validation errors
   const renderValidationErrors = () => {
     if (validationErrors.length === 0) return null;
 

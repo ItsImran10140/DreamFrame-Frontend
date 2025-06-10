@@ -64,7 +64,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Initialize auth state from localStorage
   useEffect(() => {
     const initializeAuth = () => {
       try {
@@ -87,7 +86,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     initializeAuth();
   }, []);
 
-  // Helper function to clear auth data
   const clearAuthData = () => {
     localStorage.removeItem(TOKEN_KEYS.ACCESS);
     localStorage.removeItem(TOKEN_KEYS.REFRESH);
@@ -96,7 +94,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     setIsAuthenticated(false);
   };
 
-  // Helper function to store auth data
   const storeAuthData = (data: AuthResponse) => {
     localStorage.setItem(TOKEN_KEYS.ACCESS, data.tokens.accessToken);
     localStorage.setItem(TOKEN_KEYS.REFRESH, data.tokens.refreshToken);
@@ -105,7 +102,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     setIsAuthenticated(true);
   };
 
-  // Helper function to store Google auth data
   const storeGoogleAuthData = (data: GoogleAuthResponse) => {
     localStorage.setItem(TOKEN_KEYS.ACCESS, data.token);
     localStorage.setItem(TOKEN_KEYS.USER, JSON.stringify(data.user));
@@ -113,12 +109,10 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     setIsAuthenticated(true);
   };
 
-  // Set Google authentication data
   const setGoogleAuth = (data: GoogleAuthResponse) => {
     storeGoogleAuthData(data);
   };
 
-  // Sign up function
   const signUpNewUser = async (
     username: string,
     email: string,
@@ -156,7 +150,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // Sign in function
   const signInUser = async (email: string, password: string) => {
     try {
       const response = await axios.post(`${API_BASE_URL}/login`, {
@@ -189,7 +182,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // Sign out function
   const signOut = () => {
     clearAuthData();
   };
@@ -207,7 +199,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-// Custom hook to use auth context
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
@@ -216,5 +207,4 @@ export const useAuth = () => {
   return context;
 };
 
-// Keep the old hook name for backward compatibility
 export const UserAuth = useAuth;
