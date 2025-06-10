@@ -32,13 +32,12 @@ export const OrbitalSlider: React.FC<OrbitalSliderProps> = ({
 }) => {
   const [rotation, setRotation] = useState(0);
 
-  // Continuous rotation without stops
   useEffect(() => {
     const animate = () => {
       setRotation((prev) => prev + speed);
     };
 
-    const animationFrame = setInterval(animate, 16); // ~60fps
+    const animationFrame = setInterval(animate, 16);
 
     return () => clearInterval(animationFrame);
   }, [speed]);
@@ -48,14 +47,12 @@ export const OrbitalSlider: React.FC<OrbitalSliderProps> = ({
     const baseAngle = (index * 360) / totalSlides;
     const currentAngle = baseAngle + rotation;
 
-    // Calculate position on the ring
     const x = Math.sin((currentAngle * Math.PI) / 180) * radius;
     const z = Math.cos((currentAngle * Math.PI) / 180) * radius;
 
-    // Scale and opacity based on Z position (closer = larger/more opaque)
-    const normalizedZ = (z + radius) / (2 * radius); // Normalize z to 0-1
-    const scale = 0.6 + normalizedZ * 0.4; // Scale from 0.6 to 1.0
-    const opacity = 0.4 + normalizedZ * 0.6; // Opacity from 0.4 to 1.0
+    const normalizedZ = (z + radius) / (2 * radius);
+    const scale = 0.6 + normalizedZ * 0.4;
+    const opacity = 0.4 + normalizedZ * 0.6;
 
     return {
       transform: `translateX(${x}px) translateZ(${z}px) scale(${scale})`,

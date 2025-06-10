@@ -128,7 +128,6 @@ const SettingsComponent = ({ onClose }: SettingsComponentProps) => {
       localStorage.removeItem("accessToken");
       setMessage("Account deleted successfully!");
 
-      // Close settings and potentially redirect
       setTimeout(() => {
         onClose();
       }, 2000);
@@ -154,7 +153,7 @@ const SettingsComponent = ({ onClose }: SettingsComponentProps) => {
     e.preventDefault();
     try {
       await signOut();
-      onClose(); // Close settings before signing out
+      onClose();
     } catch (error) {
       console.log(error);
     }

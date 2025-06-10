@@ -29,7 +29,6 @@ const createApiClient = (): AxiosInstance => {
     (response) => response,
     (error) => {
       if (error.response?.status === 401) {
-        // Handle unauthorized access
         localStorage.removeItem("accessToken");
         window.location.href = "/login";
       }
