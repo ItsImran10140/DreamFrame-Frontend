@@ -29,7 +29,7 @@ const LogIn = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/hero", { replace: true });
+      navigate("/new", { replace: true });
     }
   }, [isAuthenticated, navigate]);
 
@@ -76,7 +76,7 @@ const LogIn = () => {
       const result = await signInUser(formData.email, formData.password);
 
       if (result.success) {
-        navigate("/hero", { replace: true });
+        navigate("/new", { replace: true });
       } else {
         setError(result.error || "Login failed");
       }
@@ -100,7 +100,7 @@ const LogIn = () => {
 
         setGoogleAuth({ token, user });
 
-        navigate("/hero", { replace: true });
+        navigate("/new", { replace: true });
       }
     } catch (error: any) {
       console.error("Error while requesting google code", error);

@@ -35,7 +35,7 @@ export const router = createBrowserRouter([
     ),
   },
   {
-    path: "/hero",
+    path: "/new",
     element: (
       <PrivateRoute>
         <Hero />

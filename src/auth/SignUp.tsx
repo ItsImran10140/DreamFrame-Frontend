@@ -39,7 +39,7 @@ const SignUp = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/hero", { replace: true });
+      navigate("/new", { replace: true });
     }
   }, [isAuthenticated, navigate]);
 
@@ -97,7 +97,7 @@ const SignUp = () => {
       );
 
       if (result.success) {
-        navigate("/hero", { replace: true });
+        navigate("/new", { replace: true });
       } else {
         setError(result.error || "Registration failed");
       }
@@ -121,7 +121,7 @@ const SignUp = () => {
 
         setGoogleAuth({ token, user });
 
-        navigate("/hero", { replace: true });
+        navigate("/new", { replace: true });
       }
     } catch (error: any) {
       console.error("Error while requesting google code", error);
